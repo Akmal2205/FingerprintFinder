@@ -1,0 +1,17 @@
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.AssemblyInfoInputs.cache
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.AssemblyInfo.cs
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.csproj.CoreCompileInputs.cache
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/bin/Debug/net8.0/testBoyerMoore
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/bin/Debug/net8.0/testBoyerMoore.deps.json
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/bin/Debug/net8.0/testBoyerMoore.runtimeconfig.json
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/bin/Debug/net8.0/testBoyerMoore.dll
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/bin/Debug/net8.0/testBoyerMoore.pdb
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/bin/Debug/net8.0/SixLabors.ImageSharp.dll
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.csproj.AssemblyReference.cache
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoye.472623D0.Up2Date
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.dll
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/refint/testBoyerMoore.dll
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.pdb
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.genruntimeconfig.cache
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/ref/testBoyerMoore.dll
