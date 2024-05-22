@@ -4,6 +4,7 @@ using System.IO;
 using System.Collections.Generic;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using System.Diagnostics;
 
 public class BoyerMooreAlgorithm
 {
@@ -194,7 +195,11 @@ public class BoyerMooreAlgorithm
         }
 
         Func<string, string, int> matchAlgorithm;
-
+        string datasetPath = "dataset/Real";
+        string queryImagePath = "dataset/Altered/Altered-Hard/1__M_Left_index_finger_CR.BMP";
+        double similarity_min = 80.0;
+        string queryBinary = ReadFingerprintAndMatch(queryImagePath);
+        List<string> matchingImages = new List<string>();
 
         if (choice == 1)
         {
@@ -212,12 +217,28 @@ public class BoyerMooreAlgorithm
             return;
         }
 
-        string datasetPath = "dataset/Real";
-        string queryImagePath = "dataset/Real/100__M_Left_index_finger.BMP";
-        double similarity_min = 80.0;
-        string queryBinary = ReadFingerprintAndMatch(queryImagePath);
-        List<string> matchingImages = new List<string>();
+        Stopwatch timer = new Stopwatch();
+        timer.Start();
+        foreach (string imagePath in Directory.GetFiles(datasetPath, "*.BMP"))
+        {
+            string datasetBinary = ReadFingerprintAndMatch(imagePath);
+            int exactMatchIndex = matchAlgorithm(queryBinary, datasetBinary);
 
+            if (exactMatchIndex != -1)
+            {
+                timer.Stop();
+                Console.WriteLine($"Exact match found at {imagePath}");
+                Console.WriteLine($"Time taken for matching: {timer.ElapsedMilliseconds} ms");
+                return;
+            }
+        }
+
+        Console.WriteLine("Tidak ada gambar yang exact match.\nMencari menggunakan pendekatan levasthan!");
+
+         timer.Stop();
+        long exactMatchTime = timer.ElapsedMilliseconds;
+
+        timer.Restart();
         foreach (string imagePath in Directory.GetFiles(datasetPath, "*.BMP"))
         {
             string datasetBinary = ReadFingerprintAndMatch(imagePath);
@@ -228,6 +249,8 @@ public class BoyerMooreAlgorithm
                 matchingImages.Add($"{imagePath} - Similarity: {similarity}%");
             }
         }
+        timer.Stop();
+        long levenshteinTime = timer.ElapsedMilliseconds;
 
         if (matchingImages.Count > 0)
         {
@@ -242,6 +265,8 @@ public class BoyerMooreAlgorithm
         {
             Console.WriteLine("Tidak ada gambar yang memiliki kemiripan lebih dari {0}% dengan query.", similarity_min);
         }
-    }
 
+        Console.WriteLine($"Time taken for exact match search: {exactMatchTime} ms");
+        Console.WriteLine($"Time taken for Levenshtein similarity calculation: {levenshteinTime} ms");
+    }
 }
