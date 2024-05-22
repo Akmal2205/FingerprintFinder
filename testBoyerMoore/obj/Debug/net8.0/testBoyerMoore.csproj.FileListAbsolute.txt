@@ -15,3 +15,4 @@
 /Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.pdb
 /Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.genruntimeconfig.cache
 /Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/ref/testBoyerMoore.dll
+/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/Debug/net8.0/testBoyerMoore.sourcelink.json

@@ -102,35 +102,119 @@ public class BoyerMooreAlgorithm
         return asciiBuilder.ToString();
     }
 
-    public static string ReadFingerprintAndMatch(string imagePath)
+   public static string ReadFingerprintAndMatch(string imagePath)
     {
         using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
         {
             StringBuilder binaryStringBuilder = new StringBuilder();
-
-            // maksimal pixel adalah 30
-            // dari dataset yang dikasih rata rata ukurannya 96 * 103
-            // buletin jadi (15)*6p * (20)*5p  
-            for (int y = 0; y < image.Height; y+=20)
+            int rows = 6;
+            int cols = 5;
+            int maxPixels = 30;
+            int gridHeight = image.Height / rows;
+            int gridWidth = image.Width / cols;
+            for (int row = 0; row < rows; row++)
             {
-                for (int x = 0; x < image.Width; x+=15)
+                for (int col = 0; col < cols; col++)
                 {
+                    int x = col * gridWidth + gridWidth / 2;
+                    int y = row * gridHeight + gridHeight / 2;
+                    x = Math.Min(x, image.Width - 1);
+                    y = Math.Min(y, image.Height - 1);
                     Rgba32 pixelColor = image[x, y];
                     int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
                     string binary = Convert.ToString(grayValue, 2).PadLeft(8, '0');
                     binaryStringBuilder.Append(binary);
+                    if (binaryStringBuilder.Length / 8 >= maxPixels)
+                    {
+                        return BinaryArrayToAscii(binaryStringBuilder.ToString());
+                    }
                 }
             }
+
             return BinaryArrayToAscii(binaryStringBuilder.ToString());
         }
     }
 
+    public static int KMPMatch(string text, string pattern)
+    {
+        int[] lsp = ComputeLspTable(pattern);
+        int j = 0;
+        for (int i = 0; i < text.Length; i++)
+        {
+            while (j > 0 && text[i] != pattern[j])
+            {
+                j = lsp[j - 1];
+            }
+            if (text[i] == pattern[j])
+            {
+                j++; 
+                if (j == pattern.Length)
+                {
+                    return i - (j - 1);
+                }
+            }
+        }
+        return -1;
+    }
+
+    private static int[] ComputeLspTable(string pattern)
+    {
+        int[] lsp = new int[pattern.Length];
+        int j = 0; 
+        for (int i = 1; i < pattern.Length; i++)
+        {
+            while (j > 0 && pattern[i] != pattern[j])
+            {
+                j = lsp[j - 1]; 
+            }
+            if (pattern[i] == pattern[j])
+            {
+                j++;
+            }
+            lsp[i] = j;
+        }
+        return lsp;
+    }
+
     public static void Main(string[] args)
     {
+        Console.WriteLine("Pilih algoritma pencocokan (1 untuk Boyer-Moore, 2 untuk Knuth-Morris-Pratt):");
+        string input = Console.ReadLine();
+
+        if (string.IsNullOrEmpty(input))
+        {
+            Console.WriteLine("Input tidak valid.");
+            return;
+        }
+
+        if (!int.TryParse(input, out int choice))
+        {
+            Console.WriteLine("Input tidak valid.");
+            return;
+        }
+
+        Func<string, string, int> matchAlgorithm;
+
+
+        if (choice == 1)
+        {
+            matchAlgorithm = BMMatch;
+            Console.WriteLine("Menggunakan algoritma Boyer-Moore.");
+        }
+        else if (choice == 2)
+        {
+            matchAlgorithm = KMPMatch;
+            Console.WriteLine("Menggunakan algoritma Knuth-Morris-Pratt.");
+        }
+        else
+        {
+            Console.WriteLine("Pilihan tidak valid.");
+            return;
+        }
+
         string datasetPath = "dataset/Real";
         string queryImagePath = "dataset/Real/100__M_Left_index_finger.BMP";
-        // ini atur minimal similarity
-        double similarity_min = 85.0;
+        double similarity_min = 80.0;
         string queryBinary = ReadFingerprintAndMatch(queryImagePath);
         List<string> matchingImages = new List<string>();
 
@@ -147,16 +231,17 @@ public class BoyerMooreAlgorithm
 
         if (matchingImages.Count > 0)
         {
-            Console.WriteLine("Gambar yang mirip dengan query (lebih dari {0}%):",similarity_min);
+            Console.WriteLine("Gambar yang mirip dengan query (lebih dari {0}%):", similarity_min);
             foreach (string result in matchingImages)
             {
                 Console.WriteLine(result);
             }
-            Console.WriteLine("Jumlah data yang mirip {0}",matchingImages.Count);
+            Console.WriteLine("Jumlah data yang mirip {0}", matchingImages.Count);
         }
         else
         {
-            Console.WriteLine("Tidak ada gambar yang memiliki kemiripan lebih dari 80% dengan query.");
+            Console.WriteLine("Tidak ada gambar yang memiliki kemiripan lebih dari {0}% dengan query.", similarity_min);
         }
     }
+
 }
