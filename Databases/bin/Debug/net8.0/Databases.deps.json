@@ -9,6 +9,7 @@
       "Databases/1.0.0": {
         "dependencies": {
           "MySql.Data": "8.4.0",
+          "OpenCvSharp4": "4.9.0.20240103",
           "SixLabors.ImageSharp": "2.0.0",
           "System.Data.SqlClient": "4.8.6"
         },
@@ -135,6 +136,18 @@
             "rid": "win-x64",
             "assetType": "native",
             "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "OpenCvSharp4/4.9.0.20240103": {
+        "dependencies": {
+          "System.Memory": "4.5.5",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/OpenCvSharp.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
           }
         }
       },
@@ -267,6 +280,7 @@
           }
         }
       },
+      "System.Memory/4.5.5": {},
       "System.Reflection/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "5.0.0",
@@ -463,6 +477,13 @@
       "path": "mysql.data/8.4.0",
       "hashPath": "mysql.data.8.4.0.nupkg.sha512"
     },
+    "OpenCvSharp4/4.9.0.20240103": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-+BJMqToSH3dl+5SUF2YaPI+1eY/o/aTtvCQsY3qgcE4YS8qvPNS7MObzzVy4avYrBmcEEFnCvNF+1VbFnQjU9w==",
+      "path": "opencvsharp4/4.9.0.20240103",
+      "hashPath": "opencvsharp4.4.9.0.20240103.nupkg.sha512"
+    },
     "runtime.native.System.Data.SqlClient.sni/4.7.0": {
       "type": "package",
       "serviceable": true,
@@ -546,6 +567,13 @@
       "sha512": "sha512-ryTgF+iFkpGZY1vRQhfCzX0xTdlV3pyaTTqRu2ETbEv+HlV7O6y7hyQURnghNIXvctl5DuZ//Dpks6HdL/Txgw==",
       "path": "system.io.pipelines/6.0.3",
       "hashPath": "system.io.pipelines.6.0.3.nupkg.sha512"
+    },
+    "System.Memory/4.5.5": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XIWiDvKPXaTveaB7HVganDlOCRoj03l+jrwNvcge/t8vhGYKvqV+dMv6G4SAX2NoNmN0wZfVPTAlFwZcZvVOUw==",
+      "path": "system.memory/4.5.5",
+      "hashPath": "system.memory.4.5.5.nupkg.sha512"
     },
     "System.Reflection/4.3.0": {
       "type": "package",

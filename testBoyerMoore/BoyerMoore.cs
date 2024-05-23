@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 public class BoyerMooreAlgorithm
 {
-    public static int BMMatch(string text, string pattern)
+    public static int BMMatch(string pattern, string text)
     {
         int[] last = BuildLast(pattern);
         int n = text.Length;
@@ -103,40 +103,7 @@ public class BoyerMooreAlgorithm
         return asciiBuilder.ToString();
     }
 
-   public static string ReadFingerprintAndMatch(string imagePath)
-    {
-        using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
-        {
-            StringBuilder binaryStringBuilder = new StringBuilder();
-            int rows = 6;
-            int cols = 5;
-            int maxPixels = 30;
-            int gridHeight = image.Height / rows;
-            int gridWidth = image.Width / cols;
-            for (int row = 0; row < rows; row++)
-            {
-                for (int col = 0; col < cols; col++)
-                {
-                    int x = col * gridWidth + gridWidth / 2;
-                    int y = row * gridHeight + gridHeight / 2;
-                    x = Math.Min(x, image.Width - 1);
-                    y = Math.Min(y, image.Height - 1);
-                    Rgba32 pixelColor = image[x, y];
-                    int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
-                    string binary = Convert.ToString(grayValue, 2).PadLeft(8, '0');
-                    binaryStringBuilder.Append(binary);
-                    if (binaryStringBuilder.Length / 8 >= maxPixels)
-                    {
-                        return BinaryArrayToAscii(binaryStringBuilder.ToString());
-                    }
-                }
-            }
-
-            return BinaryArrayToAscii(binaryStringBuilder.ToString());
-        }
-    }
-
-    public static int KMPMatch(string text, string pattern)
+    public static int KMPMatch(string pattern, string text)
     {
         int[] lsp = ComputeLspTable(pattern);
         int j = 0;
@@ -148,7 +115,7 @@ public class BoyerMooreAlgorithm
             }
             if (text[i] == pattern[j])
             {
-                j++; 
+                j++;
                 if (j == pattern.Length)
                 {
                     return i - (j - 1);
@@ -161,12 +128,12 @@ public class BoyerMooreAlgorithm
     private static int[] ComputeLspTable(string pattern)
     {
         int[] lsp = new int[pattern.Length];
-        int j = 0; 
+        int j = 0;
         for (int i = 1; i < pattern.Length; i++)
         {
             while (j > 0 && pattern[i] != pattern[j])
             {
-                j = lsp[j - 1]; 
+                j = lsp[j - 1];
             }
             if (pattern[i] == pattern[j])
             {
@@ -177,8 +144,41 @@ public class BoyerMooreAlgorithm
         return lsp;
     }
 
+    private static string Get24BinaryPixels(string filePath)
+    {
+        using (Image<Rgba32> image = Image.Load<Rgba32>(filePath))
+        {
+            StringBuilder binaryStringBuilder = new StringBuilder();
+            int requiredPixels = 24;
+            int rows = (int)Math.Sqrt(requiredPixels); // 4 rows
+            int cols = requiredPixels / rows; // 6 cols
+            int gridWidth = image.Width / cols;
+            int gridHeight = image.Height / rows;
+
+            for (int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < cols; col++)
+                {
+                    int x = col * gridWidth + gridWidth / 2;
+                    int y = row * gridHeight + gridHeight / 2;
+                    x = Math.Min(x, image.Width - 1);
+                    y = Math.Min(y, image.Height - 1);
+                    Rgba32 pixelColor = image[x, y];
+                    int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
+                    string binary = Convert.ToString(grayValue, 2).PadLeft(8, '0');
+                    binaryStringBuilder.Append(binary);
+                }
+            }
+
+            return BinaryArrayToAscii(binaryStringBuilder.ToString());
+        }
+    }
+
+
     public static void Main(string[] args)
     {
+        while (true){
+            
         Console.WriteLine("Pilih algoritma pencocokan (1 untuk Boyer-Moore, 2 untuk Knuth-Morris-Pratt):");
         string input = Console.ReadLine();
 
@@ -196,9 +196,9 @@ public class BoyerMooreAlgorithm
 
         Func<string, string, int> matchAlgorithm;
         string datasetPath = "dataset/Real";
-        string queryImagePath = "dataset/Altered/Altered-Hard/1__M_Left_index_finger_CR.BMP";
+        string queryImagePath = "dataset/Altered/Altered-Easy/1__M_Left_index_finger_CR.BMP";
         double similarity_min = 80.0;
-        string queryBinary = ReadFingerprintAndMatch(queryImagePath);
+        string queryBinary = Get24BinaryPixels(queryImagePath);
         List<string> matchingImages = new List<string>();
 
         if (choice == 1)
@@ -221,7 +221,7 @@ public class BoyerMooreAlgorithm
         timer.Start();
         foreach (string imagePath in Directory.GetFiles(datasetPath, "*.BMP"))
         {
-            string datasetBinary = ReadFingerprintAndMatch(imagePath);
+            string datasetBinary = Get24BinaryPixels(imagePath);
             int exactMatchIndex = matchAlgorithm(queryBinary, datasetBinary);
 
             if (exactMatchIndex != -1)
@@ -233,15 +233,15 @@ public class BoyerMooreAlgorithm
             }
         }
 
-        Console.WriteLine("Tidak ada gambar yang exact match.\nMencari menggunakan pendekatan levasthan!");
+        Console.WriteLine("Tidak ada gambar yang exact match.\nMencari menggunakan pendekatan Levenshtein!");
 
-         timer.Stop();
+        timer.Stop();
         long exactMatchTime = timer.ElapsedMilliseconds;
 
         timer.Restart();
         foreach (string imagePath in Directory.GetFiles(datasetPath, "*.BMP"))
         {
-            string datasetBinary = ReadFingerprintAndMatch(imagePath);
+            string datasetBinary = Get24BinaryPixels(imagePath);
             double similarity = CalculateLevenshteinSimilarity(datasetBinary, queryBinary);
 
             if (similarity > similarity_min)
@@ -254,19 +254,21 @@ public class BoyerMooreAlgorithm
 
         if (matchingImages.Count > 0)
         {
-            Console.WriteLine("Gambar yang mirip dengan query (lebih dari {0}%):", similarity_min);
+            Console.WriteLine($"Gambar yang mirip dengan query (lebih dari {similarity_min}%):");
             foreach (string result in matchingImages)
             {
                 Console.WriteLine(result);
             }
-            Console.WriteLine("Jumlah data yang mirip {0}", matchingImages.Count);
+            Console.WriteLine($"Jumlah data yang mirip: {matchingImages.Count}");
         }
         else
         {
-            Console.WriteLine("Tidak ada gambar yang memiliki kemiripan lebih dari {0}% dengan query.", similarity_min);
+            Console.WriteLine($"Tidak ada gambar yang memiliki kemiripan lebih dari {similarity_min}% dengan query.");
         }
 
         Console.WriteLine($"Time taken for exact match search: {exactMatchTime} ms");
         Console.WriteLine($"Time taken for Levenshtein similarity calculation: {levenshteinTime} ms");
+
+        }
     }
 }

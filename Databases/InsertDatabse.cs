@@ -85,11 +85,21 @@ public class Program
             }
             
             // Insert into biodata table with random NIK
-            string queryBiodata = "INSERT INTO biodata (NIK, nama) VALUES (@NIK, @Name)";
+            string queryBiodata = "INSERT INTO biodata (NIK, nama,tempat_lahir,tanggal_lahir,jenis_kelamin,golongan_darah,alamat,agama,status_perkawinan,pekerjaan,kewarganegaraan) VALUES (@NIK, @Name,@Tl,@Tgl,@Gen,@Goldar,@Alamat,@Agama,@Sp,@Pekerjaan,@kwn)";
             using (MySqlCommand command = new MySqlCommand(queryBiodata, connection))
             {
                 command.Parameters.AddWithValue("@NIK", randomNIK);
                 command.Parameters.AddWithValue("@Name", realname);
+                command.Parameters.AddWithValue("@Tl", GenerateRandomTempatLahir());
+                command.Parameters.AddWithValue("@Tgl", GenerateRandomTanggalLahir());
+                command.Parameters.AddWithValue("@Gen", GenerateRandomJenisKelamin());
+                command.Parameters.AddWithValue("@Goldar", GenerateRandomGolonganDarah());
+                command.Parameters.AddWithValue("@Alamat", GenerateRandomAlamat());
+                command.Parameters.AddWithValue("@Agama", GenerateRandomAgama());
+                command.Parameters.AddWithValue("@Sp", GenerateRandomStatusPerkawinan());
+                command.Parameters.AddWithValue("@Pekerjaan", GenerateRandomPekerjaan());
+                command.Parameters.AddWithValue("@kwn", GenerateRandomKewarganegaraan());
+
 
                 command.ExecuteNonQuery();
             }
@@ -132,14 +142,15 @@ public class Program
 
     public static string ReadFingerprintAndMatch(string imagePath)
     {
-        using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
+         using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
         {
             StringBuilder binaryStringBuilder = new StringBuilder();
-            int rows = 6;
-            int cols = 5;
-            int maxPixels = 30;
-            int gridHeight = image.Height / rows;
+            int requiredPixels = 24;
+            int rows = (int)Math.Sqrt(requiredPixels); // 4 rows
+            int cols = requiredPixels / rows; // 6 cols
             int gridWidth = image.Width / cols;
+            int gridHeight = image.Height / rows;
+
             for (int row = 0; row < rows; row++)
             {
                 for (int col = 0; col < cols; col++)
@@ -152,10 +163,6 @@ public class Program
                     int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
                     string binary = Convert.ToString(grayValue, 2).PadLeft(8, '0');
                     binaryStringBuilder.Append(binary);
-                    if (binaryStringBuilder.Length / 8 >= maxPixels)
-                    {
-                        return BinaryArrayToAscii(binaryStringBuilder.ToString());
-                    }
                 }
             }
 
@@ -257,4 +264,92 @@ public class Program
         return numbersOnly.Substring(0, 16);
     }
 
+    public static string GenerateRandomTanggalLahir()
+{
+    DateTime start = new DateTime(1950, 1, 1);
+    int range = (DateTime.Today - start).Days;
+    return start.AddDays(random.Next(range)).ToString("yyyy-MM-dd");
 }
+
+public static string GenerateRandomJenisKelamin()
+{
+    return random.Next(2) == 0 ? "Laki-Laki" : "Perempuan";
+}
+
+public static string GenerateRandomGolonganDarah()
+{
+    string[] golonganDarah = { "A", "B", "AB", "O" };
+    return golonganDarah[random.Next(golonganDarah.Length)] + (random.Next(2) == 0 ? "+" : "-");
+}
+
+public static string GenerateRandomAlamat()
+{
+    string[] KotaDiIndonesia = new string[]
+    {
+        "Jakarta", "Surabaya", "Bandung", "Medan", "Semarang", "Makassar", "Palembang",
+        "Bandar Lampung", "Padang", "Tangerang", "Depok", "Batam", "Bekasi", "Pekanbaru",
+        "Bogor", "Malang", "Surakarta", "Yogyakarta", "Cimahi", "Balikpapan"
+    };
+
+    return $"Jl. {random.Next(1000)} {KotaDiIndonesia[random.Next(KotaDiIndonesia.Length)]}";
+}
+
+public static string GenerateRandomAgama()
+{
+    string[] AgamaList = new string[]
+    {
+        "Islam", "Kristen Protestan", "Katolik", "Hindu", "Buddha", "Konghucu"
+    };
+    return AgamaList[random.Next(AgamaList.Length)];
+}
+
+public static string GenerateRandomStatusPerkawinan()
+{
+    String[] StatusPerkawinanList = new string[]
+    {
+        "Belum Menikah", "Menikah", "Cerai"
+    };
+    
+    return StatusPerkawinanList[random.Next(StatusPerkawinanList.Length)];
+}
+
+public static string GenerateRandomPekerjaan()
+{
+    string[] pekerjaanList = new string[]
+    {
+        "PNS", "Dokter", "Guru", "Wiraswasta", "Pengusaha", "Programmer",
+        "Petani", "Polisi", "Pilot", "Desainer", "Akuntan", "Penyiar", "Arsitek",
+        "Konsultan", "Insinyur", "Wartawan", "Notaris", "Perawat", "Pramugari",
+        "Pramugara", "Pengacara", "Psikolog", "Dosen", "Mahasiswa", "Pensiunan"
+    };
+    return pekerjaanList[random.Next(pekerjaanList.Length)];
+}
+
+public static string GenerateRandomKewarganegaraan()
+{
+    string[] kewarganegaraanList = new string[]
+    {
+        "Warga Negara Indonesia", "Warga Negara Asing"
+    };
+    return kewarganegaraanList[random.Next(kewarganegaraanList.Length)];
+}
+public static string GenerateRandomTempatLahir()
+{
+    string[] kotaList = new string[]
+    {
+        "Jakarta", "Surabaya", "Bandung", "Medan", "Semarang", "Makassar",
+        "Palembang", "Depok", "Tangerang", "Bekasi", "Padang", "Bogor",
+        "Bandar Lampung", "Batam", "Pekanbaru", "Denpasar", "Surakarta",
+        "Banjarmasin", "Samarinda", "Malang", "Yogyakarta", "Cimahi", "Balikpapan",
+        "Jambi", "Pontianak", "Padang", "Ambon", "Manado", "Mataram", "Palu", "Banda Aceh",
+        "Ternate", "Sorong", "Pangkal Pinang", "Lhokseumawe", "Binjai", "Tarakan", "Tanjungpinang",
+        "Padangsidimpuan", "Parepare", "Tebing Tinggi", "Langsa", "Bima", "Subulussalam", "Pekalongan"
+    };
+    return kotaList[random.Next(kotaList.Length)];
+}
+
+
+
+}
+
+
