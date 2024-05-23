@@ -486,11 +486,12 @@ public class Program{
                             Console.WriteLine($"Status Perkawinan: {biodataMatrix[i,8]}");
                             Console.WriteLine($"Pekerjaan: {biodataMatrix[i,9]}");
                             Console.WriteLine($"Kewarganegaraan: {biodataMatrix[i,10]}");
+                            Console.WriteLine($"Kemiripan : {resultList[1]}");
                             break;
                         }
                         
                     }
-                    
+                    Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari menggunakan levensthein.");
                     if(similarNames.Count==0)
                     {   
                         for (int i = 0; i<biodataMatrix.GetLength(0);i++)
@@ -516,6 +517,7 @@ public class Program{
                                 Console.WriteLine($"Status Perkawinan: {biodataMatrix[i,8]}");
                                 Console.WriteLine($"Pekerjaan: {biodataMatrix[i,9]}");
                                 Console.WriteLine($"Kewarganegaraan: {biodataMatrix[i,10]}");
+                                Console.WriteLine($"Kemiripan : {resultList[1]}");
                                 break;
                             }
                         }
