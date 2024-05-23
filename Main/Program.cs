@@ -399,18 +399,20 @@ public class Program{
             {
                 matchAlgorithm = Algorithm.BMMatch;
                 Console.WriteLine("Menggunakan algoritma Boyer-Moore.");
+                Console.WriteLine("==============================================================");
             }
             else if (choice == 2)
             {
                 matchAlgorithm = Algorithm.KMPMatch;
                 Console.WriteLine("Menggunakan algoritma Knuth-Morris-Pratt.");
+                Console.WriteLine("==============================================================");
             }
             else
             {
                 Console.WriteLine("Pilihan tidak valid.");
                 continue;
             }
-            
+
             List<List<string>> matchingImages = new List<List<string>>();
             timer.Start();
             for (int i = 0; i < sidikJariMatrix.GetLength(0); i++)
@@ -432,7 +434,8 @@ public class Program{
             }
             long exactMatchTime = timer.ElapsedMilliseconds;
             if(matchingImages.Count==0)
-            {  
+            {
+             Console.WriteLine("==============================================================");
                 Console.WriteLine("Tidak ada gambar yang exact match.\nMencari menggunakan pendekatan Levenshtein!");
                 timer.Stop();
                 
@@ -456,10 +459,12 @@ public class Program{
                 long levenshteinTime = timer.ElapsedMilliseconds;
                 Console.WriteLine($"Waktu untuk Levenshtein similarity calculation: {levenshteinTime} ms");
             }
+            Console.WriteLine($"Jumlah data yang mirip: {matchingImages.Count}");
             if (matchingImages.Count > 0)
             {
                 Console.WriteLine($"Waktu total pencarian: {exactMatchTime} ms");
                 Console.WriteLine($"Gambar yang mirip dengan query (lebih dari {similarity_min}%):");
+                 Console.WriteLine("==============================================================");
                 foreach (List<string> resultList in matchingImages)
                 {
                     List<string[]> similarNames = new List<string[]>();
@@ -489,11 +494,12 @@ public class Program{
                             Console.WriteLine($"Kemiripan : {resultList[1]}");
                             break;
                         }
-                        
+
                     }
-                    Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari menggunakan levensthein.");
+
                     if(similarNames.Count==0)
-                    {   
+                    {
+                    Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari menggunakan levensthein.");
                         for (int i = 0; i<biodataMatrix.GetLength(0);i++)
                         {
                             string biodataName = biodataMatrix[i,1];
@@ -521,15 +527,19 @@ public class Program{
                                 break;
                             }
                         }
+
+
                     }
-                    
+
+
                     if (similarNames.Count == 0)
                     {
                         Console.WriteLine("Tidak ada nama yang mirip.");
                     }
+                    Console.WriteLine("==============================================================");
 
                 }
-                Console.WriteLine($"Jumlah data yang mirip: {matchingImages.Count}");
+
             }
             else
             {
