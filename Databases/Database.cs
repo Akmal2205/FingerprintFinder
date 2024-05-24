@@ -280,3 +280,7 @@
 
 
 // }
+
+testBoyerMoore/dataset/Real/77__M_Right_ring_finger.BMP
+testBoyerMoore/dataset/Altered/Altered-Easy/1__M_Left_index_finger_CR.BMP
+testBoyerMoore/dataset/Real/1__M_Left_index_finger.BMP

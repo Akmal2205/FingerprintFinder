@@ -76,7 +76,7 @@ public class Database
                 while (reader.Read() && row < jumlahdata)
                 {
                     sidikJariMatrix[row, 0] = reader.GetString("berkas_citra");
-                    sidikJariMatrix[row, 1] = FixCorruptedName(reader.GetString("nama"));
+                    sidikJariMatrix[row, 1] = (reader.GetString("nama"));
 
                     row++;
                 }
@@ -99,7 +99,7 @@ public class Database
 
     public static string FixNumber(string corruptedName)
     {
-        string pattern = "[01234567]";
+        string pattern = "[012345678]";
         string result = Regex.Replace(corruptedName, pattern, NumberToChar);
 
         return result;
@@ -125,6 +125,8 @@ public class Database
                 return "g";
             case "7":
                 return "t";
+            case "8":
+                return "b";
             default:
                 return number.Value;
         }
@@ -436,7 +438,7 @@ public class Program{
             if(matchingImages.Count==0)
             {
              Console.WriteLine("==============================================================");
-                Console.WriteLine("Tidak ada gambar yang exact match.\nMencari menggunakan pendekatan Levenshtein!");
+                Console.WriteLine("Tidak ada gambar yang exact match.\nMencari gambar menggunakan pendekatan Levenshtein!");
                 timer.Stop();
                 
                 
@@ -449,9 +451,10 @@ public class Program{
 
                     if (similarity > similarity_min)
                     {
+                        Console.WriteLine($"Kemiripan ditemukan di {sidikJariMatrix[i,1]}");
                         List<string> imageFound = new List<string>();
                         imageFound.Add(sidikJariMatrix[i,1]);
-                        imageFound.Add(similarity.ToString());
+                        imageFound.Add(similarity.ToString()+"%");
                         matchingImages.Add(imageFound);
                     }
                 }
@@ -471,8 +474,9 @@ public class Program{
                     for (int i = 0; i<biodataMatrix.GetLength(0);i++)
                     {
                         string biodataName = biodataMatrix[i,1];
-                        int matchVal = matchAlgorithm(resultList[0],biodataName);
+                        int matchVal = matchAlgorithm(Database.FixCorruptedName(resultList[0]),biodataName);
                         if (matchVal!=-1){
+                            Console.WriteLine("==============================================================");
                             string[] biodataRow = new string[biodataMatrix.GetLength(1)];
                             for (int j = 0; j < biodataMatrix.GetLength(1); j++)
                             {
@@ -499,13 +503,14 @@ public class Program{
 
                     if(similarNames.Count==0)
                     {
-                    Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari menggunakan levensthein.");
+                    Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari nama menggunakan levensthein.");
                         for (int i = 0; i<biodataMatrix.GetLength(0);i++)
                         {
                             string biodataName = biodataMatrix[i,1];
-                            double similarity = Algorithm.CalculateLevenshteinSimilarity(resultList[0],biodataName);
+                            double similarity = Algorithm.CalculateLevenshteinSimilarity(Database.FixCorruptedName(resultList[0]),biodataName);
                             if (similarity > similarity_min)
                             {
+                                Console.WriteLine("==============================================================");
                                 string[] biodataRow = new string[biodataMatrix.GetLength(1)];
                                 for (int j = 0; j < biodataMatrix.GetLength(1); j++)
                                 {
@@ -523,7 +528,8 @@ public class Program{
                                 Console.WriteLine($"Status Perkawinan: {biodataMatrix[i,8]}");
                                 Console.WriteLine($"Pekerjaan: {biodataMatrix[i,9]}");
                                 Console.WriteLine($"Kewarganegaraan: {biodataMatrix[i,10]}");
-                                Console.WriteLine($"Kemiripan : {resultList[1]}");
+                                Console.WriteLine($"Kemiripan Fingerprint: {resultList[1]}");
+                                Console.WriteLine($"Kemiripan Nama: {similarity} %");
                                 break;
                             }
                         }
@@ -562,3 +568,4 @@ public class Program{
 // dataset/Real/1__M_Left_index_finger.BMP
 // dataset/Altered/Altered-Hard/1__M_Left_index_finger_CR.BMP
 // dataset/Altered/Altered-Easy/1__M_Left_index_finger_CR.BMP
+// dataset/Real/81__F_Left_middle_finger.BMP
