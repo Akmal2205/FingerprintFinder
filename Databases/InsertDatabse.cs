@@ -10,35 +10,53 @@ using System.Collections.Generic;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using System.Diagnostics;
+using SixLabors.ImageSharp.Processing;
 using System.Text.RegularExpressions;
 
 public class Program
 {
     private static string connectionString = "Server=localhost;Database=TubesStima3;User ID=root;Password=308140;";
     private static Random random = new Random();
-    public static void Main(string[] args)
+   
+        public static void Main(string[] args)
     {
-        string datasetPath = "dataset/Real";
-        List<List<string>> sidikJari = new List<List<string>>();
+        string datasetPath = "dataset/Real"; 
         string[] names = GenerateNamesArray();
+        Dictionary<int, List<string>> sidikJari = new Dictionary<int, List<string>>();
+
         foreach (string imagePath in Directory.GetFiles(datasetPath, "*.BMP"))
         {
-            string datasetBinary = ReadFingerprintAndMatch(imagePath);
-            List<string> sidiktable = new List<string>();
-            sidiktable.Add(datasetBinary);
-            sidiktable.Add(imagePath);
-            sidikJari.Add(sidiktable);
+            string fileName = Path.GetFileName(imagePath);
+            int underscoreIndex = fileName.IndexOf('_');
+            if (underscoreIndex > 0)
+            {
+                string numberPart = fileName.Substring(0, underscoreIndex);
+                if (int.TryParse(numberPart, out int number))
+                {
+                    string datasetBinary = ProcessImage(imagePath);
 
+                    if (!sidikJari.ContainsKey(number))
+                    {
+                        sidikJari[number] = new List<string>();
+                    }
+
+                    sidikJari[number].Add(datasetBinary);
+                    sidikJari[number].Add(imagePath);
+                }
+            }
         }
+
         try
         {
-            int i =0;
-            foreach (List<string> line in sidikJari)
+            Random random = new Random();
+            int i = 0;
+            foreach (var entry in sidikJari)
             {
+                List<string> line = entry.Value;
                 int methodIndex = random.Next(4);
                 if (!string.IsNullOrWhiteSpace(line[0]))
                 {
-                    string randomName="";
+                    string randomName = "";
                     switch (methodIndex)
                     {
                         case 0:
@@ -54,10 +72,14 @@ public class Program
                             randomName = CombineAll(names[i]);
                             break;
                         default:
-                            randomName = names[i]; // Hanya sebagai fallback, secara teori tidak akan tercapai
+                            randomName = names[i]; 
                             break;
                     }
-                    InsertIntoDatabase(randomName,names[i], line[0],line[1]);
+                    for (int j = 0; j < line.Count; j += 2)
+                    {
+                        InsertIntoDatabase(randomName, names[i], line[j], line[j + 1]);
+                    }
+                    InsertIntoDatabaseBiodata(names[i]);
                 }
                 i++;
             }
@@ -68,29 +90,11 @@ public class Program
             Console.WriteLine($"Terjadi kesalahan: {ex.Message}");
         }
     }
-
-    private static void InsertIntoDatabase(string name, string realname,string text,string path)
-    {
+    private static void InsertIntoDatabaseBiodata(string realname){
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
             connection.Open();
-
-            // Generate random NIK using GUID
             string randomNIK = GenerateRandomNIK();
-
-
-            string query = "INSERT INTO sidik_jari (berkas_citra, nama, path_image) VALUES (@Text, @Name, @Path)";
-            using (MySqlCommand command = new MySqlCommand(query, connection))
-            {
-                command.Parameters.AddWithValue("@Name", name);
-                command.Parameters.AddWithValue("@Text", text);
-                command.Parameters.AddWithValue("@Path", path);
-
-
-                command.ExecuteNonQuery();
-            }
-            
-            // Insert into biodata table with random NIK
             string queryBiodata = "INSERT INTO biodata (NIK, nama,tempat_lahir,tanggal_lahir,jenis_kelamin,golongan_darah,alamat,agama,status_perkawinan,pekerjaan,kewarganegaraan) VALUES (@NIK, @Name,@Tl,@Tgl,@Gen,@Goldar,@Alamat,@Agama,@Sp,@Pekerjaan,@kwn)";
             using (MySqlCommand command = new MySqlCommand(queryBiodata, connection))
             {
@@ -107,6 +111,23 @@ public class Program
                 command.Parameters.AddWithValue("@kwn", GenerateRandomKewarganegaraan());
 
 
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+
+    private static void InsertIntoDatabase(string name, string realname,string text,string path)
+    {
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
+        {
+            connection.Open();
+            string randomNIK = GenerateRandomNIK();
+            string query = "INSERT INTO sidik_jari (berkas_citra, nama, path_image) VALUES (@Text, @Name, @Path)";
+            using (MySqlCommand command = new MySqlCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@Name", name);
+                command.Parameters.AddWithValue("@Text", text);
+                command.Parameters.AddWithValue("@Path", path);
                 command.ExecuteNonQuery();
             }
         }
@@ -146,35 +167,44 @@ public class Program
     }
 
 
-    public static string ReadFingerprintAndMatch(string imagePath)
+   private static string ProcessImage(string imagePath)
     {
-         using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
+        using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
         {
-            StringBuilder binaryStringBuilder = new StringBuilder();
-            int requiredPixels = 24;
-            int rows = (int)Math.Sqrt(requiredPixels); // 4 rows
-            int cols = requiredPixels / rows; // 6 cols
-            int gridWidth = image.Width / cols;
-            int gridHeight = image.Height / rows;
+            image.Mutate(x => x.Resize(90, 100)); 
 
-            for (int row = 0; row < rows; row++)
+            StringBuilder binaryStringBuilder = new StringBuilder();
+            for (int y = 0; y < image.Height; y++)
             {
-                for (int col = 0; col < cols; col++)
+                for (int x = 0; x < image.Width; x++)
                 {
-                    int x = col * gridWidth + gridWidth / 2;
-                    int y = row * gridHeight + gridHeight / 2;
-                    x = Math.Min(x, image.Width - 1);
-                    y = Math.Min(y, image.Height - 1);
                     Rgba32 pixelColor = image[x, y];
                     int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
-                    string binary = Convert.ToString(grayValue, 2).PadLeft(8, '0');
-                    binaryStringBuilder.Append(binary);
+                    binaryStringBuilder.Append(grayValue >= 128 ? '1' : '0');
                 }
             }
-
-            return BinaryArrayToAscii(binaryStringBuilder.ToString());
+            return BinaryStringToAscii(binaryStringBuilder.ToString());
         }
     }
+
+
+    private static string BinaryStringToAscii(string binaryString)
+    {
+        StringBuilder asciiStringBuilder = new StringBuilder();
+        int len = binaryString.Length;
+        if (len%8 != 0){
+            len = len - binaryString.Length%8;
+        }
+        for (int i = 0; i < len; i += 8)
+        {
+            string byteString = binaryString.Substring(i, 8);
+            byte byteValue = Convert.ToByte(byteString, 2);
+            asciiStringBuilder.Append((char)byteValue);
+        }
+
+        return asciiStringBuilder.ToString();
+    }
+
         private static string GenerateRandomCase(string input)
     {
         StringBuilder result = new StringBuilder();

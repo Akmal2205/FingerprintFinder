@@ -7,6 +7,7 @@ using System.IO;
 using System.Collections.Generic;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using System.Diagnostics;
 public class Database
 {
@@ -59,7 +60,7 @@ public class Database
 
     public static string[,] RetrieveSidikJariMatrix()
     {
-        string[,] sidikJariMatrix = new string[jumlahdata, 2]; 
+        string[,] sidikJariMatrix = new string[jumlahdata, 3]; 
 
         try
         {
@@ -77,6 +78,7 @@ public class Database
                 {
                     sidikJariMatrix[row, 0] = reader.GetString("berkas_citra");
                     sidikJariMatrix[row, 1] = (reader.GetString("nama"));
+                    sidikJariMatrix[row, 2] = reader.GetString("path_image");
 
                     row++;
                 }
@@ -260,13 +262,8 @@ public class Algorithm
 
     public static string BinaryArrayToAscii(string binaryArray)
     {
-        if (binaryArray.Length % 8 != 0)
-        {
-            throw new ArgumentException("Bukan Kelipatan 8");
-        }
 
         StringBuilder asciiBuilder = new StringBuilder();
-
         for (int i = 0; i < binaryArray.Length; i += 8)
         {
             int asciiValue = Convert.ToInt32(binaryArray.Substring(i, 8), 2);
@@ -317,36 +314,62 @@ public class Algorithm
         return lsp;
     }
 
-    public static string Get24BinaryPixels(string filePath)
+    
+   public static string ProcessImage(string imagePath)
     {
-        using (Image<Rgba32> image = Image.Load<Rgba32>(filePath))
+        using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
         {
             StringBuilder binaryStringBuilder = new StringBuilder();
-            int requiredPixels = 24;
-            int rows = (int)Math.Sqrt(requiredPixels); // 4 rows
-            int cols = requiredPixels / rows; // 6 cols
-            int gridWidth = image.Width / cols;
-            int gridHeight = image.Height / rows;
 
-            for (int row = 0; row < rows; row++)
-            {
-                for (int col = 0; col < cols; col++)
+            image.Mutate(x => x.Resize(90, 100));
+            int pixelCount = 0;
+                for (int x = 0; x < image.Width && pixelCount < 30; x++)
                 {
-                    int x = col * gridWidth + gridWidth / 2;
-                    int y = row * gridHeight + gridHeight / 2;
-                    x = Math.Min(x, image.Width - 1);
-                    y = Math.Min(y, image.Height - 1);
-                    Rgba32 pixelColor = image[x, y];
+                    Rgba32 pixelColor = image[x, image.Height/2];
                     int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
-                    string binary = Convert.ToString(grayValue, 2).PadLeft(8, '0');
-                    binaryStringBuilder.Append(binary);
+                    string binaryValue = Convert.ToString(grayValue, 2).PadLeft(8, '0');
+                    binaryStringBuilder.Append(binaryValue);
+                    pixelCount++;
                 }
-            }
-
-            return BinaryArrayToAscii(binaryStringBuilder.ToString());
+            return BinaryStringToAscii(binaryStringBuilder.ToString());
         }
     }
+    public static string ProcessImage1(string imagePath)
+{
+    using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
+    {
+        image.Mutate(x => x.Resize(90, 100)); 
 
+        StringBuilder binaryStringBuilder = new StringBuilder();
+        int pixelCount = 0;
+            for (int x = 0; x < image.Width && pixelCount < 30; x++)
+            {
+                Rgba32 pixelColor = image[x, image.Height/2];
+                int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
+                binaryStringBuilder.Append(grayValue >= 128 ? '1' : '0');
+                pixelCount++;
+            }
+        return BinaryStringToAscii(binaryStringBuilder.ToString());
+    }
+}
+
+
+    public static string BinaryStringToAscii(string binaryString)
+    {
+        StringBuilder asciiStringBuilder = new StringBuilder();
+        int len = binaryString.Length;
+        if (len%8 != 0){
+            len = len - binaryString.Length%8;
+        }
+        for (int i = 0; i < len; i += 8)
+        {
+            string byteString = binaryString.Substring(i, 8);
+            byte byteValue = Convert.ToByte(byteString, 2);
+            asciiStringBuilder.Append((char)byteValue);
+        }
+
+        return asciiStringBuilder.ToString();
+    }
 
 
 }
@@ -374,8 +397,9 @@ public class Program{
             string queryBinary;
             try
             {
-                queryBinary = Algorithm.Get24BinaryPixels(queryImagePath);
+                queryBinary = Algorithm.ProcessImage1(queryImagePath);
             }
+            
             catch (Exception ex)
             {
                 Console.WriteLine($"Gagal membaca gambar: {ex.Message}");
@@ -419,7 +443,7 @@ public class Program{
             timer.Start();
             for (int i = 0; i < sidikJariMatrix.GetLength(0); i++)
             {
-                string datasetBinary = sidikJariMatrix[i,0];
+                string datasetBinary = (sidikJariMatrix[i,0]);
                 int exactMatchIndex = matchAlgorithm(queryBinary, datasetBinary);
 
                 if (exactMatchIndex != -1)
@@ -430,6 +454,7 @@ public class Program{
                     List<string> imageFound = new List<string>();
                     imageFound.Add(sidikJariMatrix[i,1]);
                     imageFound.Add("100%");
+                    imageFound.Add(sidikJariMatrix[i,2]);
                     matchingImages.Add(imageFound);
                 }
                 
@@ -438,15 +463,15 @@ public class Program{
             if(matchingImages.Count==0)
             {
              Console.WriteLine("==============================================================");
-                Console.WriteLine("Tidak ada gambar yang exact match.\nMencari gambar menggunakan pendekatan Levenshtein!");
-                timer.Stop();
+            Console.WriteLine("Tidak ada gambar yang exact match.\nMencari gambar menggunakan pendekatan Levenshtein!");
+            timer.Stop();
                 
                 
                 
                 timer.Restart();
                 for (int i = 0; i < sidikJariMatrix.GetLength(0); i++)
                 {
-                    string datasetBinary = sidikJariMatrix[i,0];
+                    string datasetBinary = (sidikJariMatrix[i,0]);
                     double similarity = Algorithm.CalculateLevenshteinSimilarity(datasetBinary, queryBinary);
 
                     if (similarity > similarity_min)
@@ -455,6 +480,7 @@ public class Program{
                         List<string> imageFound = new List<string>();
                         imageFound.Add(sidikJariMatrix[i,1]);
                         imageFound.Add(similarity.ToString()+"%");
+                        imageFound.Add(sidikJariMatrix[i,2]);
                         matchingImages.Add(imageFound);
                     }
                 }
@@ -496,6 +522,8 @@ public class Program{
                             Console.WriteLine($"Pekerjaan: {biodataMatrix[i,9]}");
                             Console.WriteLine($"Kewarganegaraan: {biodataMatrix[i,10]}");
                             Console.WriteLine($"Kemiripan : {resultList[1]}");
+
+                            Console.WriteLine($"Path image : {resultList[2]}");
                             break;
                         }
 
@@ -507,7 +535,7 @@ public class Program{
                         for (int i = 0; i<biodataMatrix.GetLength(0);i++)
                         {
                             string biodataName = biodataMatrix[i,1];
-                            double similarity = Algorithm.CalculateLevenshteinSimilarity(Database.FixCorruptedName(resultList[0]),biodataName);
+                            double similarity = Algorithm.CalculateLevenshteinSimilarity(biodataName,Database.FixCorruptedName(resultList[0]));
                             if (similarity > similarity_min)
                             {
                                 Console.WriteLine("==============================================================");
@@ -530,6 +558,7 @@ public class Program{
                                 Console.WriteLine($"Kewarganegaraan: {biodataMatrix[i,10]}");
                                 Console.WriteLine($"Kemiripan Fingerprint: {resultList[1]}");
                                 Console.WriteLine($"Kemiripan Nama: {similarity} %");
+                                Console.WriteLine($"Path image : {resultList[2]}");
                                 break;
                             }
                         }
@@ -569,3 +598,6 @@ public class Program{
 // dataset/Altered/Altered-Hard/1__M_Left_index_finger_CR.BMP
 // dataset/Altered/Altered-Easy/1__M_Left_index_finger_CR.BMP
 // dataset/Real/81__F_Left_middle_finger.BMP
+// Main/dataset/Altered/Altered-Hard/14__M_Right_middle_finger_Zcut.BMP
+// Main/dataset/Real/600__M_Right_index_finger.BMP
+// dataset/Real/480__M_Right_index_finger.BMP
