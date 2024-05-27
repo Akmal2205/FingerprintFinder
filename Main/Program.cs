@@ -16,7 +16,7 @@ public class Database
     public static string[,] RetrieveBiodataMatrix()
     {
         
-        string[,] biodataMatrix = new string[jumlahdata, 11]; 
+        string[,] biodataMatrix = new string[600, 11]; 
 
         try
         {
@@ -375,11 +375,20 @@ public class Algorithm
 }
 
 public class Program{
+    public long timeNeeded; //buat bagian waktunya
+    public string[,] solutionsValid; //buat placehoder hasilnya
+    public string setImageQuerry; //buat data image yang di querry
+    public string algoChoose; //buat masukin pilihan algo yang mana
 
+    public double min_similarity;
     public static void Main(string[] args){
+        // Membuat instance dari kelas Program
+        Program programInstance = new Program();
         double similarity_min = 80.0;
+
         string[,] biodataMatrix = Database.RetrieveBiodataMatrix();
         string[,] sidikJariMatrix = Database.RetrieveSidikJariMatrix();
+
         Stopwatch timer = new Stopwatch();
         while (true){
             Console.WriteLine("Masukkan Filepath dari query image (atau ketik 'exit' untuk keluar):");
@@ -393,7 +402,13 @@ public class Program{
             {
                 break;
             }
-            
+
+
+            //
+            programInstance.setImageQuerry= queryImagePath;
+            //
+
+
             string queryBinary;
             try
             {
@@ -407,6 +422,13 @@ public class Program{
             }
             Console.WriteLine("Pilih algoritma pencocokan (1 untuk Boyer-Moore, 2 untuk Knuth-Morris-Pratt):");
             string input = Console.ReadLine();
+
+
+            //
+            programInstance.algoChoose=input;
+            //
+
+
             if (string.IsNullOrEmpty(input))
             {
                 Console.WriteLine("Input tidak valid.");
@@ -448,9 +470,9 @@ public class Program{
 
                 if (exactMatchIndex != -1)
                 {
-                    timer.Stop();
-                    Console.WriteLine($"Exact match ditemukan di {sidikJariMatrix[i,1]}");
-                    Console.WriteLine($"Waktu untuk matching: {timer.ElapsedMilliseconds} ms");
+                    // timer.Stop();
+                    // Console.WriteLine($"Exact match ditemukan di {sidikJariMatrix[i,1]}");
+                    // Console.WriteLine($"Waktu untuk matching: {timer.ElapsedMilliseconds} ms");
                     List<string> imageFound = new List<string>();
                     imageFound.Add(sidikJariMatrix[i,1]);
                     imageFound.Add("100%");
@@ -459,16 +481,16 @@ public class Program{
                 }
                 
             }
-            long exactMatchTime = timer.ElapsedMilliseconds;
+            
             if(matchingImages.Count==0)
             {
              Console.WriteLine("==============================================================");
             Console.WriteLine("Tidak ada gambar yang exact match.\nMencari gambar menggunakan pendekatan Levenshtein!");
-            timer.Stop();
+            // timer.Stop();
                 
                 
                 
-                timer.Restart();
+                // timer.Restart();
                 for (int i = 0; i < sidikJariMatrix.GetLength(0); i++)
                 {
                     string datasetBinary = (sidikJariMatrix[i,0]);
@@ -476,7 +498,7 @@ public class Program{
 
                     if (similarity > similarity_min)
                     {
-                        Console.WriteLine($"Kemiripan ditemukan di {sidikJariMatrix[i,1]}");
+                        // Console.WriteLine($"Kemiripan ditemukan di {sidikJariMatrix[i,1]}");
                         List<string> imageFound = new List<string>();
                         imageFound.Add(sidikJariMatrix[i,1]);
                         imageFound.Add(similarity.ToString()+"%");
@@ -484,14 +506,20 @@ public class Program{
                         matchingImages.Add(imageFound);
                     }
                 }
-                timer.Stop();
+                // timer.Stop();
                 long levenshteinTime = timer.ElapsedMilliseconds;
                 Console.WriteLine($"Waktu untuk Levenshtein similarity calculation: {levenshteinTime} ms");
             }
+
+            //
             Console.WriteLine($"Jumlah data yang mirip: {matchingImages.Count}");
+            programInstance.solutionsValid = new string[matchingImages.Count,13];
+            //
+            
             if (matchingImages.Count > 0)
             {
-                Console.WriteLine($"Waktu total pencarian: {exactMatchTime} ms");
+                int co=0;
+                // Console.WriteLine($"Waktu total pencarian: {exactMatchTime} ms");
                 Console.WriteLine($"Gambar yang mirip dengan query (lebih dari {similarity_min}%):");
                  Console.WriteLine("==============================================================");
                 foreach (List<string> resultList in matchingImages)
@@ -500,6 +528,8 @@ public class Program{
                     for (int i = 0; i<biodataMatrix.GetLength(0);i++)
                     {
                         string biodataName = biodataMatrix[i,1];
+                        // Console.WriteLine(resultList[0]);
+                        // Console.WriteLine(biodataName);
                         int matchVal = matchAlgorithm(Database.FixCorruptedName(resultList[0]),biodataName);
                         if (matchVal!=-1){
                             Console.WriteLine("==============================================================");
@@ -524,6 +554,21 @@ public class Program{
                             Console.WriteLine($"Kemiripan : {resultList[1]}");
 
                             Console.WriteLine($"Path image : {resultList[2]}");
+
+                            programInstance.solutionsValid[co,0]=biodataMatrix[i,0];
+                            programInstance.solutionsValid[co,1]=biodataMatrix[i,1];
+                            programInstance.solutionsValid[co,2]=biodataMatrix[i,2];
+                            programInstance.solutionsValid[co,3]=biodataMatrix[i,3];
+                            programInstance.solutionsValid[co,4]=biodataMatrix[i,4];
+                            programInstance.solutionsValid[co,5]=biodataMatrix[i,5];
+                            programInstance.solutionsValid[co,6]=biodataMatrix[i,6];
+                            programInstance.solutionsValid[co,7]=biodataMatrix[i,7];
+                            programInstance.solutionsValid[co,8]=biodataMatrix[i,8];
+                            programInstance.solutionsValid[co,9]=biodataMatrix[i,9];
+                            programInstance.solutionsValid[co,10]=biodataMatrix[i,10];
+                            programInstance.solutionsValid[co,11]=resultList[1];
+                            programInstance.solutionsValid[co,12]=resultList[2];
+                            co++;
                             break;
                         }
 
@@ -531,7 +576,7 @@ public class Program{
 
                     if(similarNames.Count==0)
                     {
-                    Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari nama menggunakan levensthein.");
+                    // Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari nama menggunakan levensthein.");
                         for (int i = 0; i<biodataMatrix.GetLength(0);i++)
                         {
                             string biodataName = biodataMatrix[i,1];
@@ -559,14 +604,27 @@ public class Program{
                                 Console.WriteLine($"Kemiripan Fingerprint: {resultList[1]}");
                                 Console.WriteLine($"Kemiripan Nama: {similarity} %");
                                 Console.WriteLine($"Path image : {resultList[2]}");
+                                programInstance.solutionsValid[co,0]=biodataMatrix[i,0];
+                                programInstance.solutionsValid[co,1]=biodataMatrix[i,1];
+                                programInstance.solutionsValid[co,2]=biodataMatrix[i,2];
+                                programInstance.solutionsValid[co,3]=biodataMatrix[i,3];
+                                programInstance.solutionsValid[co,4]=biodataMatrix[i,4];
+                                programInstance.solutionsValid[co,5]=biodataMatrix[i,5];
+                                programInstance.solutionsValid[co,6]=biodataMatrix[i,6];
+                                programInstance.solutionsValid[co,7]=biodataMatrix[i,7];
+                                programInstance.solutionsValid[co,8]=biodataMatrix[i,8];
+                                programInstance.solutionsValid[co,9]=biodataMatrix[i,9];
+                                programInstance.solutionsValid[co,10]=biodataMatrix[i,10];
+                                programInstance.solutionsValid[co,11]=resultList[1];
+                                programInstance.solutionsValid[co,12]=resultList[2];
+                                co++;
                                 break;
                             }
                         }
 
 
                     }
-
-
+                    timer.Stop();
                     if (similarNames.Count == 0)
                     {
                         Console.WriteLine("Tidak ada nama yang mirip.");
@@ -574,13 +632,12 @@ public class Program{
                     Console.WriteLine("==============================================================");
 
                 }
-
+                
             }
-            else
-            {
-                Console.WriteLine($"Waktu total pencarian: {exactMatchTime} ms");
-                Console.WriteLine($"Tidak ada gambar yang memiliki kemiripan lebih dari {similarity_min}% dengan query.");
-            }
+        long exactMatchTime = timer.ElapsedMilliseconds;
+        programInstance.timeNeeded = exactMatchTime;
+        Console.WriteLine($"Waktu total pencarian: {exactMatchTime} ms");
+            
 
             
 
