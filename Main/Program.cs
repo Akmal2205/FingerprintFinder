@@ -503,17 +503,16 @@ public class Algorithm
         using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
         {
             StringBuilder binaryStringBuilder = new StringBuilder();
-
             image.Mutate(x => x.Resize(90, 100));
-            int pixelCount = 0;
-                for (int x = 0; x < image.Width && pixelCount < 30; x++)
+            for (int y = 0; y<image.Height ; y++){
+                for (int x = 0; x < image.Width; x++)
                 {
-                    Rgba32 pixelColor = image[x, image.Height/2];
+                    Rgba32 pixelColor = image[x, y];
                     int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
-                    string binaryValue = Convert.ToString(grayValue, 2).PadLeft(8, '0');
-                    binaryStringBuilder.Append(binaryValue);
-                    pixelCount++;
+                    binaryStringBuilder.Append(grayValue >= 128 ? '1' : '0');
+                    // binaryStringBuilder.Append(binaryValue);
                 }
+            }
             return BinaryStringToAscii(binaryStringBuilder.ToString());
         }
     }
@@ -550,11 +549,8 @@ public class Algorithm
             byte byteValue = Convert.ToByte(byteString, 2);
             asciiStringBuilder.Append((char)byteValue);
         }
-
         return asciiStringBuilder.ToString();
     }
-
-
 }
 
 
@@ -576,6 +572,11 @@ public class Program{
 
         Stopwatch timer = new Stopwatch();
         while (true){
+            programInstance.solutionsValid=null;
+            programInstance.algoChoose=null;
+            programInstance.setImageQuerry = null;
+            programInstance.timeNeeded=0;
+
             Console.WriteLine("Masukkan Filepath dari query image (atau ketik 'exit' untuk keluar):");
             string queryImagePath = Console.ReadLine();
             if (string.IsNullOrEmpty(queryImagePath))
@@ -597,7 +598,7 @@ public class Program{
             string queryBinary;
             try
             {
-                queryBinary = Algorithm.ProcessImage1(queryImagePath);
+                queryBinary = Algorithm.ProcessImage(queryImagePath);
             }
             
             catch (Exception ex)
@@ -761,7 +762,7 @@ public class Program{
 
                     if(similarNames.Count==0)
                     {
-                    // Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari nama menggunakan levensthein.");
+                    Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari nama menggunakan levensthein.");
                         for (int i = 0; i<biodataMatrix.GetLength(0);i++)
                         {
                             string biodataName = biodataMatrix[i,1];
