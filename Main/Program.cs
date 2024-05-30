@@ -438,7 +438,6 @@ public class Algorithm
                 }
             }
         }
-
         int maxLength = Math.Max(str1.Length, str2.Length);
         return 100.0 * (1.0 - (double)dp[str1.Length, str2.Length] / maxLength);
     }
@@ -510,7 +509,6 @@ public class Algorithm
                     Rgba32 pixelColor = image[x, y];
                     int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
                     binaryStringBuilder.Append(grayValue >= 128 ? '1' : '0');
-                    // binaryStringBuilder.Append(binaryValue);
                 }
             }
             return BinaryStringToAscii(binaryStringBuilder.ToString());
@@ -521,35 +519,37 @@ public class Algorithm
     using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
     {
         image.Mutate(x => x.Resize(90, 100)); 
-
         StringBuilder binaryStringBuilder = new StringBuilder();
         int pixelCount = 0;
-            for (int x = 0; x < image.Width && pixelCount < 30; x++)
+        for (int y = 100-image.Height/5; y<image.Height && pixelCount<80;y++)
+        {
+            for (int x = 0; x < image.Width && pixelCount < 80; x++)
             {
-                Rgba32 pixelColor = image[x, image.Height/2];
+                Rgba32 pixelColor = image[x, y];
                 int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
                 binaryStringBuilder.Append(grayValue >= 128 ? '1' : '0');
                 pixelCount++;
             }
+        }
         return BinaryStringToAscii(binaryStringBuilder.ToString());
     }
 }
 
-
     public static string BinaryStringToAscii(string binaryString)
     {
-        StringBuilder asciiStringBuilder = new StringBuilder();
+        StringBuilder asciiBuilder = new StringBuilder();
         int len = binaryString.Length;
-        if (len%8 != 0){
-            len = len - binaryString.Length%8;
-        }
+        if (len % 8 !=0)
+            len = len - len%8;
         for (int i = 0; i < len; i += 8)
         {
-            string byteString = binaryString.Substring(i, 8);
-            byte byteValue = Convert.ToByte(byteString, 2);
-            asciiStringBuilder.Append((char)byteValue);
+            string binaryByte = binaryString.Substring(i, 8);
+            int decimalValue = Convert.ToInt32(binaryByte, 2);
+            char asciiChar = Convert.ToChar(decimalValue);
+            asciiBuilder.Append(asciiChar);
         }
-        return asciiStringBuilder.ToString();
+
+        return asciiBuilder.ToString();
     }
 }
 
@@ -598,7 +598,7 @@ public class Program{
             string queryBinary;
             try
             {
-                queryBinary = Algorithm.ProcessImage(queryImagePath);
+                queryBinary = Algorithm.ProcessImage1(queryImagePath);
             }
             
             catch (Exception ex)
@@ -652,6 +652,7 @@ public class Program{
             for (int i = 0; i < sidikJariMatrix.GetLength(0); i++)
             {
                 string datasetBinary = (sidikJariMatrix[i,0]);
+                
                 int exactMatchIndex = matchAlgorithm(queryBinary, datasetBinary);
 
                 if (exactMatchIndex != -1)
@@ -679,7 +680,7 @@ public class Program{
                 // timer.Restart();
                 for (int i = 0; i < sidikJariMatrix.GetLength(0); i++)
                 {
-                    string datasetBinary = (sidikJariMatrix[i,0]);
+                    string datasetBinary = sidikJariMatrix[i,0];
                     double similarity = Algorithm.CalculateLevenshteinSimilarity(datasetBinary, queryBinary);
 
                     if (similarity > similarity_min)
@@ -843,4 +844,4 @@ public class Program{
 // dataset/Real/81__F_Left_middle_finger.BMP
 // Main/dataset/Altered/Altered-Hard/14__M_Right_middle_finger_Zcut.BMP
 // Main/dataset/Real/600__M_Right_index_finger.BMP
-// dataset/Real/480__M_Right_index_finger.BMP
+// dataset/Real/28__M_Right_index_finger.BMP
