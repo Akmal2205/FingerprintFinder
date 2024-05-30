@@ -1,95 +1,117 @@
 ﻿using System;
 using System.Text;
-using System.IO;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.PixelFormats;
-using SixLabors.ImageSharp.Processing;
 
-public class ImageProcessor
+
+
+
+public class Encryption
 {
-    public static string ProcessImage(string imagePath)
+    public static void Main()
+    {   
+        string plaintext = "GG ez 17 bro";
+        string encrypted = RSADecryption(plaintext, isEncrypting: true);
+        Console.WriteLine("Encrypted: " + encrypted);
+        string decrypted = RSADecryption(encrypted, isEncrypting: false);
+        Console.WriteLine("Decrypted: " + decrypted);
+    }
+
+    public static string RSADecryption(string plaintext, bool isEncrypting)
     {
-        using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
+        int private_key = 39653; //1019; //d
+        int public_key = 65537; //79; //e
+        int p =  211; //47; //bebas berapa
+        int q = 223; //71; //bebas berapa
+        int n = p * q; //3337
+        int m = (p - 1) * (q - 1); //46620 //3220
+        if (isEncrypting)
         {
-            image.Mutate(x => x.Resize(90, 100));
-
-            StringBuilder binaryStringBuilder = new StringBuilder();
-            int pixelCount = 0;
-            int middleRow = image.Height / 2;
-
-            for (int x = 0; x < image.Width && pixelCount < 30; x++)
+            List<string> encrypted = StringToASCIIHex(plaintext);
+            List<string> result = new List<string>();
+            foreach(string hex in encrypted)
             {
-                Rgba32 pixelColor = image[x, middleRow];
-                int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
-                string binaryValue = Convert.ToString(grayValue, 2).PadLeft(8, '0'); 
-                binaryStringBuilder.Append(binaryValue);
-                pixelCount++;
+                int num = Convert.ToInt32(hex, 16);
+                long encryptedNum = ModularExponentiation(num, public_key, n);
+                string encryptedHex = encryptedNum.ToString("X");
+                result.Add(encryptedHex);
             }
-            return binaryStringBuilder.ToString();
+            
+            result = HexToASCII(result);
+            string ans = string.Join("", result);
+            return ans;
         }
-    }
-
-    public static string BinaryStringToAscii(string binaryString)
-    {
-        StringBuilder asciiStringBuilder = new StringBuilder();
-        int len = binaryString.Length;
-        if (len % 8 != 0)
+        else
         {
-            len -= len % 8;
+            List<string> encrypted = StringToList(ASCIIToHex(plaintext));
+            List<string> result = new List<string>();
+            foreach(string hex in encrypted)
+            {               
+                int num = Convert.ToInt32(hex, 16);
+                long encryptedNum = ModularExponentiation(num, private_key, n);
+                string encryptedHex = encryptedNum.ToString("X");
+                result.Add(encryptedHex);
+            }
+            result = HexToASCII(result);
+            string ans = string.Join("", result);
+            return ans;
         }
-
-        for (int i = 0; i < len; i += 8)
-        {
-            string byteString = binaryString.Substring(i, 8);
-            byte byteValue = Convert.ToByte(byteString, 2);
-            asciiStringBuilder.Append((char)byteValue);
-        }
-
-        return asciiStringBuilder.ToString();
     }
-    public static int binaryToDecimal(string n){
-        string num = n;
-        int dec_value = 0;
-        int base1 = 1;
-        int len = num.Length;
-        for (int i = len -1;i>=0;i--){
-            if (num[i]=='1')
-                dec_value += base1;
-            base1= base1 * 2;
-        }
-        return dec_value;
-    }
-    public static string setStringtoAscii(string str){
-        int N = str.Length;
-        if (N%8 != 0){
-            return "yaha";
-        }
-        string res ="";
-        for (int i =0;i<N;i+=8){
-            int decimal_value = binaryToDecimal((str.Substring(i,8)));
-            res+= (char) (decimal_value);
-        }
-        return res;
-    }
-
-    public static void Main(string[] args)
+    public static List<string> StringToList(string input)
     {
-        string queryImagePath = "dataset/Real/1__M_Left_index_finger.BMP";
-        string binaryString = ProcessImage(queryImagePath);
-        Console.WriteLine("Binary String: " + binaryString);
-        
-        string asciiString = BinaryStringToAscii(binaryString);
-        Console.WriteLine("ASCII String: " + asciiString);
-        Console.WriteLine("Binary String Length: " + binaryString.Length);
-        Console.WriteLine(setStringtoAscii(binaryString));
-        Console.WriteLine(setStringtoAscii(binaryString).Length);
-        int test = ("ÿÿÿÿ«:ÅCb{Km¼/8]&             ").Length;
-        Console.WriteLine(test);
-        if ( asciiString.Equals("ÿÿÿÿ«:ÅCb{Km¼/8]&")){
-            Console.WriteLine("test1");
-        }
-        if (asciiString == "ÿÿÿÿ«:ÅCb{Km¼/8]&             "){
-            Console.WriteLine("test");
-        }
+        string[] wordsArray = input.Split(' ');
+        List<string> wordsList = new List<string>(wordsArray);
+        return wordsList;
     }
+    public static List<string> StringToASCIIHex(string plaintext)
+    {
+        List<string> hexValues = new List<string>();
+        foreach (char c in plaintext)
+        {
+            int asciiVal = (int)c;
+            string hexVal = asciiVal.ToString("X2");
+            hexValues.Add(hexVal);
+        }
+        return hexValues;
+    }
+    public static string ASCIIToHex(string plaintext)
+    {
+        StringBuilder hexValues = new StringBuilder();
+        foreach (char c in plaintext)
+        {
+            int asciiVal = (int)c;
+            string hexVal = asciiVal.ToString("X2");
+            hexValues.Append(hexVal);
+            hexValues.Append(" ");
+        }
+        hexValues.Remove(hexValues.Length - 1, 1);
+        return hexValues.ToString();
+    }
+
+    public static List<string> HexToASCII(List<string> input)
+    {
+        List<string> ASCIIVal = new List<string>();
+        foreach (string hex in input)
+        {
+            int num = Convert.ToInt32(hex, 16);
+            char character = (char)num; 
+            ASCIIVal.Add(character.ToString());
+        }
+        return ASCIIVal;
+    }
+
+
+    public static long ModularExponentiation(long baseValue, long exponent, long modulus)
+    {
+        long result = 1;
+        baseValue = baseValue % modulus;
+        while (exponent > 0)
+        {
+            if ((exponent % 2) == 1)
+                result = (result * baseValue) % modulus;
+            exponent = exponent >> 1;
+            baseValue = (baseValue * baseValue) % modulus;
+        }
+        return result;
+    }
+
+
 }

@@ -9,6 +9,106 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System.Diagnostics;
+
+public class Encryption{
+    public static string RSADecryption(string plaintext, bool isEncrypting)
+    {
+        int private_key = 39653; //1019; //d
+        int public_key = 65537; //79; //e
+        int p =  211; //47; //bebas berapa //rahasia
+        int q = 223; //71; //bebas berapa //rahasia
+        int n = p * q; //3337 //public
+        int m = (p - 1) * (q - 1); //46620 //3220 //rahasia
+        if (isEncrypting)
+        {
+            List<string> encrypted = StringToASCIIHex(plaintext);
+            List<string> result = new List<string>();
+            foreach(string hex in encrypted)
+            {
+                int num = Convert.ToInt32(hex, 16);
+                long encryptedNum = ModularExponentiation(num, public_key, n);
+                string encryptedHex = encryptedNum.ToString("X");
+                result.Add(encryptedHex);
+            }
+            
+            result = HexToASCII(result);
+            string ans = string.Join("", result);
+            return ans;
+        }
+        else
+        {
+            List<string> encrypted = StringToList(ASCIIToHex(plaintext));
+            List<string> result = new List<string>();
+            foreach(string hex in encrypted)
+            {               
+                int num = Convert.ToInt32(hex, 16);
+                long encryptedNum = ModularExponentiation(num, private_key, n);
+                string encryptedHex = encryptedNum.ToString("X");
+                result.Add(encryptedHex);
+            }
+            result = HexToASCII(result);
+            string ans = string.Join("", result);
+            return ans;
+        }
+    }
+    public static List<string> StringToList(string input)
+    {
+        string[] wordsArray = input.Split(' ');
+        List<string> wordsList = new List<string>(wordsArray);
+        return wordsList;
+    }
+    public static List<string> StringToASCIIHex(string plaintext)
+    {
+        List<string> hexValues = new List<string>();
+        foreach (char c in plaintext)
+        {
+            int asciiVal = (int)c;
+            string hexVal = asciiVal.ToString("X2");
+            hexValues.Add(hexVal);
+        }
+        return hexValues;
+    }
+    public static string ASCIIToHex(string plaintext)
+    {
+        StringBuilder hexValues = new StringBuilder();
+        foreach (char c in plaintext)
+        {
+            int asciiVal = (int)c;
+            string hexVal = asciiVal.ToString("X2");
+            hexValues.Append(hexVal);
+            hexValues.Append(" ");
+        }
+        hexValues.Remove(hexValues.Length - 1, 1);
+        return hexValues.ToString();
+    }
+
+    public static List<string> HexToASCII(List<string> input)
+    {
+        List<string> ASCIIVal = new List<string>();
+        foreach (string hex in input)
+        {
+            int num = Convert.ToInt32(hex, 16);
+            char character = (char)num; 
+            ASCIIVal.Add(character.ToString());
+        }
+        return ASCIIVal;
+    }
+
+
+    public static long ModularExponentiation(long baseValue, long exponent, long modulus)
+    {
+        long result = 1;
+        baseValue = baseValue % modulus;
+        while (exponent > 0)
+        {
+            if ((exponent % 2) == 1)
+                result = (result * baseValue) % modulus;
+            exponent = exponent >> 1;
+            baseValue = (baseValue * baseValue) % modulus;
+        }
+        return result;
+    }
+}
 public class Database
 {
     public static string connectionString = "Server=localhost;Database=TubesStima3;Uid=root;Pwd=308140;";
@@ -33,16 +133,16 @@ public class Database
                 while (reader.Read() && row < jumlahdata)
                 {
                     biodataMatrix[row, 0] = reader.GetString("NIK");
-                    biodataMatrix[row, 1] = reader.GetString("nama");
-                    biodataMatrix[row, 2] = reader.GetString("tempat_lahir");
+                    biodataMatrix[row, 1] = Encryption.RSADecryption(reader.GetString("nama"), isEncrypting: false);
+                    biodataMatrix[row, 2] = Encryption.RSADecryption(reader.GetString("tempat_lahir"), isEncrypting: false);
                     biodataMatrix[row, 3] = reader.GetDateTime("tanggal_lahir").ToString("yyyy-MM-dd");
                     biodataMatrix[row, 4] = reader.GetString("jenis_kelamin");
-                    biodataMatrix[row, 5] = reader.GetString("golongan_darah");
-                    biodataMatrix[row, 6] = reader.GetString("alamat");
-                    biodataMatrix[row, 7] = reader.GetString("agama");
+                    biodataMatrix[row, 5] = Encryption.RSADecryption(reader.GetString("golongan_darah"), isEncrypting: false);
+                    biodataMatrix[row, 6] =Encryption.RSADecryption(reader.GetString("alamat"), isEncrypting: false) ;
+                    biodataMatrix[row, 7] = Encryption.RSADecryption(reader.GetString("agama"), isEncrypting: false);
                     biodataMatrix[row, 8] = reader.GetString("status_perkawinan");
-                    biodataMatrix[row, 9] = reader.GetString("pekerjaan");
-                    biodataMatrix[row, 10] = reader.GetString("kewarganegaraan");
+                    biodataMatrix[row, 9] = Encryption.RSADecryption(reader.GetString("pekerjaan"), isEncrypting: false);
+                    biodataMatrix[row, 10] = Encryption.RSADecryption(reader.GetString("kewarganegaraan"), isEncrypting: false);
 
                     row++;
                 }
@@ -176,7 +276,90 @@ public class Database
         }
         return result.ToString().Trim();
     }
-  
+
+    public static string RSADecryption(string nama, bool isEncrypting)
+    {
+        int private_key = 1019; //d
+        int public_key = 79; //e
+        int p = 47; //bebas berapa
+        int q = 71; //bebas berapa
+        int n = p * q; //3337
+        int m = (p - 1) * (q - 1); //3220
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        if (isEncrypting)
+        {
+            string encrypted = StringToASCIIDecimal(nama);
+            for (int i = 0; i < encrypted.Length; i += 3)
+            {
+                string enc = encrypted.Substring(i, 3);
+                int num = int.Parse(enc);
+                num = (int)ModularExponentiation(num, public_key, n);
+                stringBuilder.Append(num);
+            }
+            return stringBuilder.ToString();
+        }
+        else
+        {
+            for (int i = 0; i < nama.Length; i += 3)
+            {
+                string enc = nama.Substring(i, Math.Min(3, nama.Length - i)); // Memastikan tidak melebihi panjang string
+                int num = int.Parse(enc);
+                num = (int)ModularExponentiation(num, private_key, n);
+                stringBuilder.Append(num);
+            }
+            return ASCIIDecimalToString(stringBuilder.ToString());
+        }
+    }
+
+    public static string StringToASCIIDecimal(string nama)
+    {
+        StringBuilder asciiDecimal = new StringBuilder();
+        foreach (char c in nama)
+        {
+            int asciiVal = (int)c;
+            asciiDecimal.Append(asciiVal.ToString("D3")); // Menambahkan nol di depan jika kurang dari tiga digit
+        }
+        return asciiDecimal.ToString();
+    }
+
+    public static string ASCIIDecimalToString(string asciiDecimalString)
+    {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < asciiDecimalString.Length; i += 3)
+        {
+            string trio = asciiDecimalString.Substring(i, 3);
+            int asciiValue = int.Parse(trio);
+            while (asciiValue > 128)
+            {
+                asciiValue = asciiValue / 10;
+            }
+            char character = (char)asciiValue;
+            sb.Append(character);
+        }
+        return sb.ToString();
+    }
+
+    public static long ModularExponentiation(long baseNum, long exponent, long modulus)
+    {
+        if (modulus == 1)
+            return 0;
+
+        long result = 1;
+        baseNum = baseNum % modulus;
+
+        while (exponent > 0)
+        {
+            if (exponent % 2 == 1)
+                result = (result * baseNum) % modulus;
+
+            exponent = exponent >> 1;
+            baseNum = (baseNum * baseNum) % modulus;
+        }
+
+        return result;
+    }
 
 }
 
@@ -373,6 +556,8 @@ public class Algorithm
 
 
 }
+
+
 
 public class Program{
     public long timeNeeded; //buat bagian waktunya
