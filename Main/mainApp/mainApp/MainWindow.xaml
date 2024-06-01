@@ -1,0 +1,162 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+        mc:Ignorable="d"
+        Title="Fingerprint Indentifier" Height="750" Width="900"
+        ResizeMode="NoResize"
+        WindowStyle="None"
+        >
+    <Border Background="#FBF9FA">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="65"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+            <!-- Custom Window Bar -->
+            <Border BorderBrush="#1B4ECD"
+                    BorderThickness="0, 0, 0, 2">
+                <Grid x:Name="windowGrid"
+                      Height="30"
+                      Width="900"
+                      Background="Transparent"
+                      MouseLeftButtonDown="Window_MouseLeftButton">
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <Button x:Name="btnClose"
+                                                    Content="X"
+                                                    Width="35"
+                                                    Background="Transparent"
+                                                    BorderBrush="Transparent"
+                                                    Foreground="#1B4ECD"
+                                                    FontWeight="Bold"
+                                                    Click="btnClose_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <!-- Title Bar -->
+            <StackPanel Grid.Row="1"
+                        VerticalAlignment="Center">
+                <Border BorderBrush="#1B4ECD"
+                        BorderThickness="0, 0, 0, 1.5"
+                        Width="850">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Images/icons8-fingerprint-60.png"
+                               Height="40"
+                               Margin="5, 0, 0, 5"/>
+                        <TextBlock Text="Fingerprint Identifier"
+                           HorizontalAlignment="Left"
+                           VerticalAlignment="Center"
+                           Foreground="#1B4ECD"
+                           FontSize="25"
+                           FontWeight="Bold"
+                           Margin="5, 0, 10, 10"/>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+
+            <!-- Content Section -->
+            <Grid Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="400"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="200"/>
+                    </Grid.RowDefinitions>
+                    <!-- Fingerprint insertion and button section -->
+                    <Border x:Name="imageContainer"
+                            BorderBrush="#1B4ECD"
+                            BorderThickness="1.5"
+                            CornerRadius="10"
+                            Margin="40, 10, 20, 10"
+                            MouseLeftButtonUp="btnOpenImage_Click">
+                        <TextBlock VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   FontSize="18"
+                                   Foreground="#7597EE"
+                                   FontWeight="Bold">Insert Fingerprint Here</TextBlock>
+                    </Border>
+                    <!-- Result List Section -->
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal"
+                                    VerticalAlignment="Top"
+                                    HorizontalAlignment="Right"
+                                    Margin="10, 0, 20, 0"
+                                    Height="50">
+                            <TextBlock VerticalAlignment="Center"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Margin="0, 0, 10, 0"
+                                       Foreground="#1B4ECD">Methods :</TextBlock>
+                            <RadioButton Content="KMP"
+                                         x:Name="KMP"
+                                         Click="btnKMP_Click"
+                                         Style="{StaticResource CustomRadioButton}"/>
+
+                            <RadioButton Content="BM"
+                                         x:Name="BM"
+                                         Click="btnBM_Click"
+                                         Style="{StaticResource CustomRadioButton}"/>
+                        </StackPanel>
+                        <Button Grid.Row="1"
+                                Content="Search"
+                                VerticalAlignment="Top"
+                                HorizontalAlignment="Right"
+                                Style="{StaticResource CustomSearchButton}"/>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0"
+                               VerticalAlignment="Center"
+                               HorizontalAlignment="Right"
+                               Margin="0, 0, 40, 0"
+                               FontSize="25"
+                               Foreground="#1B4ECD"
+                               FontWeight="Bold">
+                        <Underline>Results</Underline></TextBlock>
+                    <StackPanel Grid.Row="1"
+                                Margin="30, 0, 0, 0">
+                        <TextBlock Foreground="#1B4ECD"
+                                   FontWeight="Bold"
+                                   FontSize="13">
+                            Match found :
+                        </TextBlock>
+                        <TextBlock Foreground="#1B4ECD"
+                                   FontWeight="Bold"
+                                   FontSize="13">
+                            Time execution :
+                        </TextBlock>
+                    </StackPanel>
+                    <Border Grid.Row="2"
+                            BorderBrush="#1B4ECD"
+                            BorderThickness="1.5"
+                            CornerRadius="10"
+                            Margin="20, 0, 20, 20">
+
+                    </Border>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="3"
+                    Background="#1B4ECD">
+            </Grid>
+        </Grid>
+
+    </Border>
+</Window>

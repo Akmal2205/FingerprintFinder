@@ -1,0 +1,99 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainapp\\themes\\buttontheme.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\themes\\buttontheme.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainapp\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainapp\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ButtonTheme.xaml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Themes\\ButtonTheme.xaml",
+              "RelativeDocumentMoniker": "mainApp\\Themes\\ButtonTheme.xaml",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Themes\\ButtonTheme.xaml",
+              "RelativeToolTip": "mainApp\\Themes\\ButtonTheme.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-01T09:05:17.281Z",
+              "IsPinned": true
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "mainApp\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\MainWindow.xaml",
+              "RelativeToolTip": "mainApp\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-01T08:06:51.59Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "App.config",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\App.config",
+              "RelativeDocumentMoniker": "mainApp\\App.config",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\App.config",
+              "RelativeToolTip": "mainApp\\App.config",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-06-01T09:09:35.548Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "App.xaml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\App.xaml",
+              "RelativeDocumentMoniker": "mainApp\\App.xaml",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\App.xaml",
+              "RelativeToolTip": "mainApp\\App.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-01T08:09:31.871Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "mainApp\\MainWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\MainWindow.xaml.cs",
+              "RelativeToolTip": "mainApp\\MainWindow.xaml.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAAcwAoAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-01T08:06:50.112Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
