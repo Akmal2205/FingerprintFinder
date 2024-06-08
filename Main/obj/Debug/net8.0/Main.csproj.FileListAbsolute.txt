@@ -42,3 +42,14 @@
 /Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/Main/obj/Debug/net8.0/Main.pdb
 /Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/Main/obj/Debug/net8.0/Main.genruntimeconfig.cache
 /Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/Main/obj/Debug/net8.0/ref/Main.dll
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.csproj.AssemblyReference.cache
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.mainApp.mainApp.Properties.Resources.resources
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.csproj.GenerateResource.cache
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.AssemblyInfoInputs.cache
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.AssemblyInfo.cs
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.csproj.CoreCompileInputs.cache
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.sourcelink.json
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.dll
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/refint/Main.dll
+/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/Debug/net8.0/Main.pdb

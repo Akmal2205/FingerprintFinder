@@ -766,7 +766,7 @@ public class Program{
                         }
                     }
 
-                this.solutionsValid
+               
                 }
                 timer.Stop();
                 if (similarNames.Count == 0)

@@ -1885,11 +1885,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/Main/Main.csproj",
+      "projectUniqueName": "/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/Main.csproj",
       "projectName": "Main",
-      "projectPath": "/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/Main/Main.csproj",
+      "projectPath": "/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/Main.csproj",
       "packagesPath": "/Users/ekaaprawira/.nuget/packages/",
-      "outputPath": "/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/Main/obj/",
+      "outputPath": "/Users/ekaaprawira/Documents/github/Tugas/Untitled/Main/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/ekaaprawira/.nuget/NuGet/NuGet.Config"
