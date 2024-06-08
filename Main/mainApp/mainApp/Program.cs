@@ -660,7 +660,7 @@ public class Program{
             foreach (List<string> resultList in matchingImages)
             {
                 List<string[]> similarNames = new List<string[]>();
-                for (int i = 0; i < biodataMatrix.GetLength(0); i++)
+                for (int i = 0; i < biodataMatrix.GetLength(0) && co<0; i++)
                 {
                     string biodataName = biodataMatrix[i, 1];
                     // Console.WriteLine(resultList[0]);
@@ -764,6 +764,21 @@ public class Program{
                             co++;
                             break;
                         }
+                    }
+                    if (co > 0){
+                        this.solutionsValid[0, 0] = this.solutionsValid[co, 0] ;
+                        this.solutionsValid[0, 1] = this.solutionsValid[co, 1] ;
+                        this.solutionsValid[0, 2] = this.solutionsValid[co, 2] ;
+                        this.solutionsValid[0, 3] = this.solutionsValid[co, 3] ;
+                        this.solutionsValid[0, 4] = this.solutionsValid[co, 4] ;
+                        this.solutionsValid[0, 5] = this.solutionsValid[co, 5] ;
+                        this.solutionsValid[0, 6] = this.solutionsValid[co, 6] ;
+                        this.solutionsValid[0, 7] = this.solutionsValid[co, 7] ;
+                        this.solutionsValid[0, 8] = this.solutionsValid[co, 8] ;
+                        this.solutionsValid[0, 9] = this.solutionsValid[co, 9] ;
+                        this.solutionsValid[0, 10] =this.solutionsValid[co, 10];
+                        this.solutionsValid[0, 11] =this.solutionsValid[co, 11];
+                        this.solutionsValid[0, 12] =this.solutionsValid[co, 12];
                     }
 
                
