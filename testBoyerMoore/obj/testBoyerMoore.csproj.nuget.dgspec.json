@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/testBoyerMoore.csproj": {}
+    "/Users/ekaaprawira/Documents/github/Tugas/Untitled/testBoyerMoore/testBoyerMoore.csproj": {}
   },
   "projects": {
-    "/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/testBoyerMoore.csproj": {
+    "/Users/ekaaprawira/Documents/github/Tugas/Untitled/testBoyerMoore/testBoyerMoore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/testBoyerMoore.csproj",
+        "projectUniqueName": "/Users/ekaaprawira/Documents/github/Tugas/Untitled/testBoyerMoore/testBoyerMoore.csproj",
         "projectName": "testBoyerMoore",
-        "projectPath": "/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/testBoyerMoore.csproj",
+        "projectPath": "/Users/ekaaprawira/Documents/github/Tugas/Untitled/testBoyerMoore/testBoyerMoore.csproj",
         "packagesPath": "/Users/ekaaprawira/.nuget/packages/",
-        "outputPath": "/Users/ekaaprawira/Documents/github/Tubes3_C-sharp-apek/testBoyerMoore/obj/",
+        "outputPath": "/Users/ekaaprawira/Documents/github/Tugas/Untitled/testBoyerMoore/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/ekaaprawira/.nuget/NuGet/NuGet.Config"

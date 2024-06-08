@@ -607,6 +607,7 @@ public class Program{
                 imageFound.Add("100%");
                 imageFound.Add(sidikJariMatrix[i, 2]);
                 matchingImages.Add(imageFound);
+                break;
             }
 
         }
@@ -630,12 +631,18 @@ public class Program{
                     // Console.WriteLine($"Kemiripan ditemukan di {sidikJariMatrix[i,1]}");
                     List<string> imageFound = new List<string>();
                     imageFound.Add(sidikJariMatrix[i, 1]);
-                    imageFound.Add(similarity.ToString() + "%");
+                    imageFound.Add(similarity.ToString("F2") + "%");
                     imageFound.Add(sidikJariMatrix[i, 2]);
                     matchingImages.Add(imageFound);
                 }
             }
             timer.Stop();
+            matchingImages.Sort((a, b) =>
+                {
+                    double similarityA = double.Parse(a[1].TrimEnd('%'));
+                    double similarityB = double.Parse(b[1].TrimEnd('%'));
+                    return similarityB.CompareTo(similarityA);
+                });
             long levenshteinTime = timer.ElapsedMilliseconds;
             // Console.WriteLine($"Waktu untuk Levenshtein similarity calculation: {levenshteinTime} ms");
         }
@@ -658,7 +665,13 @@ public class Program{
                     string biodataName = biodataMatrix[i, 1];
                     // Console.WriteLine(resultList[0]);
                     // Console.WriteLine(biodataName);
-                    int matchVal = matchAlgorithm(Database.FixCorruptedName(resultList[0]), biodataName);
+                    int matchVal;
+                    if (biodataName.Length > resultList[0].Length){
+                        matchVal = matchAlgorithm(biodataName.Replace(" ",""),Database.FixCorruptedName(resultList[0]).Replace(" ",""));
+                    }
+                    else{
+                        matchVal = matchAlgorithm(Database.FixCorruptedName(resultList[0]).Replace(" ",""), biodataName.Replace(" ",""));
+                    }
                     if (matchVal != -1)
                     {
                         Debug.WriteLine("==============================================================");
@@ -705,12 +718,14 @@ public class Program{
 
                 if (similarNames.Count == 0)
                 {
+                    List<double> similarityArray= new List<double>();
                     Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari nama menggunakan levensthein.");
                     for (int i = 0; i < biodataMatrix.GetLength(0); i++)
                     {
                         string biodataName = biodataMatrix[i, 1];
-                        double similarity = Algorithm.CalculateLevenshteinSimilarity(biodataName, Database.FixCorruptedName(resultList[0]));
-                        if (similarity > min_similar)
+                        double similarity = Algorithm.CalculateLevenshteinSimilarity(biodataName.Replace(" ",""),Database.FixCorruptedName(resultList[0]).Replace(" ",""));
+                        similarityArray.Add(similarity);
+                        if (similarity > min_similar && similarity > similarityArray.Max())
                         {
                             Console.WriteLine("==============================================================");
                             string[] biodataRow = new string[biodataMatrix.GetLength(1)];
@@ -751,7 +766,7 @@ public class Program{
                         }
                     }
 
-
+                this.solutionsValid
                 }
                 timer.Stop();
                 if (similarNames.Count == 0)
