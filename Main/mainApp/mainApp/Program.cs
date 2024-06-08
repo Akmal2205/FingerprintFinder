@@ -9,6 +9,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using System.Diagnostics;
+using System.Linq;
 
 public class Encryption{
     public static string RSADecryption(string plaintext, bool isEncrypting)
@@ -563,7 +564,7 @@ public class Program{
     public double min_similarity;
     public int matches;
 
-    public void mainProgram(string algo, int min_similar, string imagePathQuery)
+    public void mainProgram(string algo, double min_similar, string imagePathQuery)
     {
         this.algoChoose = algo;
         this.min_similarity = min_similar;
@@ -653,7 +654,7 @@ public class Program{
         if (matchingImages.Count > 0)
         {
             int co = 0;
-            this.solutionsValid = new string[matchingImages.Count, 13]; 
+            this.solutionsValid = new string[1000, 13]; 
             // Console.WriteLine($"Waktu total pencarian: {exactMatchTime} ms");
             Debug.WriteLine($"Gambar yang mirip dengan query (lebih dari {min_similar}%):");
             Debug.WriteLine("==============================================================");
@@ -715,19 +716,27 @@ public class Program{
                     }
 
                 }
-
+                Debug.WriteLine(similarNames.Count);
                 if (similarNames.Count == 0)
                 {
+                    co = 0;
                     List<double> similarityArray= new List<double>();
-                    Console.WriteLine($"Tidak ada nama yang exactMatch.\nMencari nama menggunakan levensthein.");
+                    Debug.WriteLine($"Tidak ada nama yang exactMatch.\nMencari nama menggunakan levensthein.");
                     for (int i = 0; i < biodataMatrix.GetLength(0); i++)
                     {
                         string biodataName = biodataMatrix[i, 1];
                         double similarity = Algorithm.CalculateLevenshteinSimilarity(biodataName.Replace(" ",""),Database.FixCorruptedName(resultList[0]).Replace(" ",""));
                         similarityArray.Add(similarity);
-                        if (similarity > min_similar && similarity > similarityArray.Max())
+                        
+                       // Debug.WriteLine(min_similar);
+                        if (biodataName == "Bambang Bayu Rina") { Debug.WriteLine(biodataName);
+                            Debug.WriteLine(similarity);
+                            Debug.WriteLine(similarityArray.Max());
+                        }
+                        if ((similarity > 50) && (similarity >= similarityArray.Max()))
                         {
-                            Console.WriteLine("==============================================================");
+                            Debug.WriteLine(similarity>min_similar);
+                            Debug.WriteLine("==============================================================");
                             string[] biodataRow = new string[biodataMatrix.GetLength(1)];
                             for (int j = 0; j < biodataMatrix.GetLength(1); j++)
                             {
@@ -748,6 +757,7 @@ public class Program{
                             Debug.WriteLine($"Kemiripan Fingerprint: {resultList[1]}");
                             Debug.WriteLine($"Kemiripan Nama: {similarity} %");
                             Debug.WriteLine($"Path image : {resultList[2]}");
+                            Debug.WriteLine(this.solutionsValid.ToString());
                             this.solutionsValid[co, 0] = biodataMatrix[i, 0];
                             this.solutionsValid[co, 1] = biodataMatrix[i, 1];
                             this.solutionsValid[co, 2] = biodataMatrix[i, 2];
@@ -762,23 +772,23 @@ public class Program{
                             this.solutionsValid[co, 11] = resultList[1];
                             this.solutionsValid[co, 12] = resultList[2];
                             co++;
-                            break;
+                           
                         }
                     }
                     if (co > 0){
-                        this.solutionsValid[0, 0] = this.solutionsValid[co, 0] ;
-                        this.solutionsValid[0, 1] = this.solutionsValid[co, 1] ;
-                        this.solutionsValid[0, 2] = this.solutionsValid[co, 2] ;
-                        this.solutionsValid[0, 3] = this.solutionsValid[co, 3] ;
-                        this.solutionsValid[0, 4] = this.solutionsValid[co, 4] ;
-                        this.solutionsValid[0, 5] = this.solutionsValid[co, 5] ;
-                        this.solutionsValid[0, 6] = this.solutionsValid[co, 6] ;
-                        this.solutionsValid[0, 7] = this.solutionsValid[co, 7] ;
-                        this.solutionsValid[0, 8] = this.solutionsValid[co, 8] ;
-                        this.solutionsValid[0, 9] = this.solutionsValid[co, 9] ;
-                        this.solutionsValid[0, 10] =this.solutionsValid[co, 10];
-                        this.solutionsValid[0, 11] =this.solutionsValid[co, 11];
-                        this.solutionsValid[0, 12] =this.solutionsValid[co, 12];
+                        this.solutionsValid[0, 0] = this.solutionsValid[co-1, 0] ;
+                        this.solutionsValid[0, 1] = this.solutionsValid[co-1, 1] ;
+                        this.solutionsValid[0, 2] = this.solutionsValid[co-1, 2] ;
+                        this.solutionsValid[0, 3] = this.solutionsValid[co-1, 3] ;
+                        this.solutionsValid[0, 4] = this.solutionsValid[co-1, 4] ;
+                        this.solutionsValid[0, 5] = this.solutionsValid[co-1, 5] ;
+                        this.solutionsValid[0, 6] = this.solutionsValid[co-1, 6] ;
+                        this.solutionsValid[0, 7] = this.solutionsValid[co-1, 7] ;
+                        this.solutionsValid[0, 8] = this.solutionsValid[co-1, 8] ;
+                        this.solutionsValid[0, 9] = this.solutionsValid[co-1, 9] ;
+                        this.solutionsValid[0, 10] =this.solutionsValid[co-1, 10];
+                        this.solutionsValid[0, 11] =this.solutionsValid[co-1, 11];
+                        this.solutionsValid[0, 12] =this.solutionsValid[co-1, 12];
                     }
 
                

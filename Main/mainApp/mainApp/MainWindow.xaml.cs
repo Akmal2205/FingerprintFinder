@@ -132,7 +132,7 @@ namespace WpfApp1
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
             Program program = new Program();
-            program.mainProgram(this.Method, 80, this.imagePath);
+            program.mainProgram(this.Method, 80.0, this.imagePath);
             Debug.WriteLine(program.solutionsValid.Length.ToString());
             Debug.WriteLine(program.timeNeeded.ToString());
             Debug.WriteLine(program.matches.ToString());
