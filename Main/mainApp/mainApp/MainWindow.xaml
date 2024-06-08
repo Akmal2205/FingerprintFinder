@@ -9,7 +9,9 @@
         ResizeMode="NoResize"
         WindowStyle="None"
         >
-    <Border Background="#FBF9FA">
+    <Border Background="#FBF9FA"
+            BorderBrush="#1B4ECD"
+            BorderThickness="1">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
@@ -110,6 +112,8 @@
                                          Style="{StaticResource CustomRadioButton}"/>
                         </StackPanel>
                         <Button Grid.Row="1"
+                                x:Name="Search"
+                                Click="btnSearch_Click"
                                 Content="Search"
                                 VerticalAlignment="Top"
                                 HorizontalAlignment="Right"
@@ -134,22 +138,41 @@
                                 Margin="30, 0, 0, 0">
                         <TextBlock Foreground="#1B4ECD"
                                    FontWeight="Bold"
-                                   FontSize="13">
-                            Match found :
-                        </TextBlock>
+                                   FontSize="13"
+                                   Text="{Binding Match}"/>
                         <TextBlock Foreground="#1B4ECD"
                                    FontWeight="Bold"
-                                   FontSize="13">
-                            Time execution :
-                        </TextBlock>
+                                   FontSize="13"
+                                   Text="{Binding Time}"/>
                     </StackPanel>
                     <Border Grid.Row="2"
                             BorderBrush="#1B4ECD"
                             BorderThickness="1.5"
                             CornerRadius="10"
                             Margin="20, 0, 20, 20">
-
-                    </Border>
+                        <ListView Name="CardListView" 
+                                  HorizontalAlignment="Stretch" 
+                                  VerticalAlignment="Stretch" 
+                                  Margin="10" 
+                                  ScrollViewer.CanContentScroll="False"
+                                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                  Style="{StaticResource CustomListView}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                    <Border BorderBrush="#1B4ECD" BorderThickness="1.5" CornerRadius="5" Padding="10" Margin="5">
+                                            <StackPanel>
+                                            <TextBlock Text="{Binding Nama}" Foreground="#1B4ECD" FontSize="16" FontWeight="Bold" Margin="0,0,0,5"/>
+                                            <TextBlock Text="{Binding Kemiripan}" FontSize="13" Foreground="#1B4ECD" FontWeight="Bold" Margin="0,0,0,10"/>
+                                            <Button Content="Details" Width="100" HorizontalAlignment="Left" 
+                                                    Style="{StaticResource CustomDetailsButton}"
+                                                    Click="Details_Click"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Border>
                 </Grid>
             </Grid>
 

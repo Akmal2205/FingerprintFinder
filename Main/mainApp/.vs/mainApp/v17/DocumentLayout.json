@@ -3,52 +3,31 @@
   "WorkspaceRootPath": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\program\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\program\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainapp\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\packages.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\properties\\resources.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\properties\\resources.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\detailswindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\detailswindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\properties\\settings.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\properties\\settings.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\detailswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\detailswindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\properties\\assemblyinfo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\properties\\settings.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\properties\\settings.settings||{6D2695F9-5365-4A78-89ED-F205C045BFE6}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainapp\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\app.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\properties\\resources.resx||{FF4D6ACA-9352-4A5F-821E-F4D6EBDCAB11}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainapp\\themes\\buttontheme.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\themes\\buttontheme.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|c:\\users\\asus\\documents\\sem 4\\stima\\tubes3_fix\\tubes3_c-sharp-apek\\main\\mainapp\\mainapp\\themes\\cardlistview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{DED72D13-86FF-4269-B55A-E07B979C089B}|mainApp\\mainApp.csproj|solutionrelative:mainapp\\themes\\cardlistview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -58,162 +37,94 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "ButtonTheme.xaml",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Themes\\ButtonTheme.xaml",
-              "RelativeDocumentMoniker": "mainApp\\Themes\\ButtonTheme.xaml",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Themes\\ButtonTheme.xaml",
-              "RelativeToolTip": "mainApp\\Themes\\ButtonTheme.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-06-01T09:05:17.281Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Resources.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\Resources.Designer.cs",
-              "RelativeDocumentMoniker": "mainApp\\Properties\\Resources.Designer.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\Resources.Designer.cs",
-              "RelativeToolTip": "mainApp\\Properties\\Resources.Designer.cs",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T15:13:26.021Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Settings.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\Settings.Designer.cs",
-              "RelativeDocumentMoniker": "mainApp\\Properties\\Settings.Designer.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\Settings.Designer.cs",
-              "RelativeToolTip": "mainApp\\Properties\\Settings.Designer.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T15:13:23.944Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AssemblyInfo.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\AssemblyInfo.cs",
-              "RelativeDocumentMoniker": "mainApp\\Properties\\AssemblyInfo.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\AssemblyInfo.cs",
-              "RelativeToolTip": "mainApp\\Properties\\AssemblyInfo.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T14:56:39.929Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "packages.config",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\packages.config",
-              "RelativeDocumentMoniker": "mainApp\\packages.config",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\packages.config",
-              "RelativeToolTip": "mainApp\\packages.config",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAALAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2024-06-01T14:50:17.545Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Program\\Program.cs",
-              "RelativeDocumentMoniker": "mainApp\\Program\\Program.cs",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Program\\Program.cs",
-              "RelativeToolTip": "mainApp\\Program\\Program.cs",
-              "ViewState": "AQIAAOwBAAAAAAAAAAAiwPEBAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T11:21:35.511Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "mainApp\\MainWindow.xaml.cs",
               "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\MainWindow.xaml.cs",
               "RelativeToolTip": "mainApp\\MainWindow.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACMAAAANAAAA",
+              "ViewState": "AQIAAJQAAAAAAAAAAAAmwKgAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T08:06:50.112Z",
+              "WhenOpened": "2024-06-08T13:52:37.761Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "App.config",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\App.config",
-              "RelativeDocumentMoniker": "mainApp\\App.config",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\App.config",
-              "RelativeToolTip": "mainApp\\App.config",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2024-06-01T09:09:35.548Z",
+              "Title": "DetailsWindow.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\DetailsWindow.xaml.cs",
+              "RelativeDocumentMoniker": "mainApp\\DetailsWindow.xaml.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\DetailsWindow.xaml.cs",
+              "RelativeToolTip": "mainApp\\DetailsWindow.xaml.cs",
+              "ViewState": "AQIAAEAAAAAAAAAAAAAAwDIAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-08T13:46:11.067Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Settings.settings",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\Settings.settings",
-              "RelativeDocumentMoniker": "mainApp\\Properties\\Settings.settings",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\Settings.settings",
-              "RelativeToolTip": "mainApp\\Properties\\Settings.settings",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.002767|",
-              "WhenOpened": "2024-06-01T14:56:45.587Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{269a02dc-6af8-11d3-bdc4-00c04f688e50}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Resources.resx",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\Resources.resx",
-              "RelativeDocumentMoniker": "mainApp\\Properties\\Resources.resx",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Properties\\Resources.resx",
-              "RelativeToolTip": "mainApp\\Properties\\Resources.resx",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2024-06-01T14:56:43.719Z",
+              "DocumentIndex": 2,
+              "Title": "DetailsWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\DetailsWindow.xaml",
+              "RelativeDocumentMoniker": "mainApp\\DetailsWindow.xaml",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\DetailsWindow.xaml",
+              "RelativeToolTip": "mainApp\\DetailsWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-08T13:44:35.343Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 3,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\MainWindow.xaml",
               "RelativeDocumentMoniker": "mainApp\\MainWindow.xaml",
               "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\MainWindow.xaml",
               "RelativeToolTip": "mainApp\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-06-01T08:06:51.59Z",
+              "WhenOpened": "2024-06-07T15:02:24.005Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "App.xaml",
-              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\App.xaml",
-              "RelativeDocumentMoniker": "mainApp\\App.xaml",
-              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\App.xaml",
-              "RelativeToolTip": "mainApp\\App.xaml",
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\Program.cs",
+              "RelativeDocumentMoniker": "..\\Program.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\Program.cs",
+              "RelativeToolTip": "..\\Program.cs",
+              "ViewState": "AQIAAOYCAAAAAAAAAAAjwD0CAAAVAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-08T06:57:51.276Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Program.cs",
+              "RelativeDocumentMoniker": "mainApp\\Program.cs",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Program.cs",
+              "RelativeToolTip": "mainApp\\Program.cs",
+              "ViewState": "AQIAAC4CAAAAAAAAAAAWwKoCAABIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-07T15:02:22.351Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CardListView.xaml",
+              "DocumentMoniker": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Themes\\CardListView.xaml",
+              "RelativeDocumentMoniker": "mainApp\\Themes\\CardListView.xaml",
+              "ToolTip": "C:\\Users\\ASUS\\Documents\\Sem 4\\Stima\\TUBES3_FIX\\Tubes3_C-sharp-apek\\Main\\mainApp\\mainApp\\Themes\\CardListView.xaml",
+              "RelativeToolTip": "mainApp\\Themes\\CardListView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-06-01T08:09:31.871Z",
+              "WhenOpened": "2024-06-08T05:50:56.13Z",
               "EditorCaption": ""
             }
           ]

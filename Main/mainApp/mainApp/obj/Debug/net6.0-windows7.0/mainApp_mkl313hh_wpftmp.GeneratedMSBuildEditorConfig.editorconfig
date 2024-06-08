@@ -1,0 +1,13 @@
+is_global = true
+build_property.TargetFramework = net6.0-windows7.0
+build_property.TargetPlatformMinVersion = 7.0
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = mainApp_mkl313hh_wpftmp
+build_property.ProjectDir = C:\Users\ASUS\Documents\Sem 4\Stima\TUBES3_FIX\Tubes3_C-sharp-apek\Main\mainApp\mainApp\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
