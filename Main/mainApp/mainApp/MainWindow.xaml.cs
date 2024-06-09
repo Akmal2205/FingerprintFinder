@@ -139,7 +139,7 @@ namespace WpfApp1
             }
             Program program = new Program();
             program.mainProgram(this.Method, 80.0, this.imagePathQuery);
-            Debug.WriteLine(program.solutionsValid.Length.ToString());
+            //Debug.WriteLine(program.solutionsValid.Length.ToString());
             Debug.WriteLine(program.timeNeeded.ToString());
             Debug.WriteLine(program.matches.ToString());
             this.Time = "Time execution : " + program.timeNeeded.ToString() + " ms";

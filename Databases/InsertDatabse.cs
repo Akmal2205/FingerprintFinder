@@ -188,25 +188,89 @@ public class Program
 
 
 
-   private static string ProcessImage(string imagePath)
+   public static string ProcessImage(string imagePath)
+{
+    using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
     {
-        using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
-        {
-            image.Mutate(x => x.Resize(90, 100)); 
+        StringBuilder binaryStringBuilder = new StringBuilder();
 
-            StringBuilder binaryStringBuilder = new StringBuilder();
-            for (int y = 0; y < image.Height; y++)
+        // Resize the image
+        image.Mutate(x => x.Resize(90, 100));
+
+        // Convert to grayscale
+        image.Mutate(x => x.Grayscale());
+
+        // Enhance contrast using histogram equalization
+        image.Mutate(x => x.HistogramEqualization());
+
+        // Calculate global threshold
+        int threshold = CalculateOtsuThreshold(image);
+        Debug.WriteLine(threshold);
+
+        // Process each pixel
+        for (int y = 0; y < image.Height; y++)
+        {
+            for (int x = 0; x < image.Width; x++)
             {
-                for (int x = 0; x < image.Width; x++)
-                {
-                    Rgba32 pixelColor = image[x, y];
-                    int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
-                    binaryStringBuilder.Append(grayValue >= 128 ? '1' : '0');
-                }
+                Rgba32 pixelColor = image[x, y];
+                int grayValue = pixelColor.R; // Since the image is grayscale, R, G, and B are equal
+                binaryStringBuilder.Append(grayValue >= threshold ? '1' : '0');
             }
-            return BinaryStringToAscii(binaryStringBuilder.ToString());
+        }
+
+        return BinaryStringToAscii(binaryStringBuilder.ToString());
+    }
+}
+
+private static int CalculateOtsuThreshold(Image<Rgba32> image)
+{
+    int[] histogram = new int[256];
+    for (int y = 0; y < image.Height; y++)
+    {
+        for (int x = 0; x < image.Width; x++)
+        {
+            Rgba32 pixelColor = image[x, y];
+            histogram[pixelColor.R]++;
         }
     }
+
+    int totalPixels = image.Width * image.Height;
+    float sum = 0;
+    for (int i = 0; i < 256; i++)
+    {
+        sum += i * histogram[i];
+    }
+
+    float sumB = 0;
+    int wB = 0;
+    int wF = 0;
+    float varMax = 0;
+    int threshold = 0;
+
+    for (int t = 0; t < 256; t++)
+    {
+        wB += histogram[t];
+        if (wB == 0) continue;
+
+        wF = totalPixels - wB;
+        if (wF == 0) break;
+
+        sumB += t * histogram[t];
+
+        float mB = sumB / wB;
+        float mF = (sum - sumB) / wF;
+
+        float varBetween = wB * wF * (mB - mF) * (mB - mF);
+
+        if (varBetween > varMax)
+        {
+            varMax = varBetween;
+            threshold = t;
+        }
+    }
+
+    return threshold;
+}
 
 
     private static string BinaryStringToAscii(string binaryString)
