@@ -112,7 +112,7 @@ public class Encryption{
 }
 public class Database
 {
-    public static string connectionString = "Server=localhost;Database=TubesStima3;Uid=root;Pwd=220504;";
+    public static string connectionString = "Server=localhost;Database=TubesStima3;Uid=root;Pwd=308140;";
     public static int jumlahdata =6000;
     public static string[,] RetrieveBiodataMatrix()
     {
@@ -668,10 +668,10 @@ public class Program{
                     // Console.WriteLine(biodataName);
                     int matchVal;
                     if (biodataName.Length > resultList[0].Length){
-                        matchVal = matchAlgorithm(biodataName.Replace(" ",""),Database.FixCorruptedName(resultList[0]).Replace(" ",""));
+                        matchVal = matchAlgorithm(Database.FixCorruptedName(biodataName.Replace(" ","")),(resultList[0]).Replace(" ",""));
                     }
                     else{
-                        matchVal = matchAlgorithm(Database.FixCorruptedName(resultList[0]).Replace(" ",""), biodataName.Replace(" ",""));
+                        matchVal = matchAlgorithm((resultList[0]).Replace(" ",""), Database.FixCorruptedName(biodataName.Replace(" ","")));
                     }
                     if (matchVal != -1)
                     {
@@ -684,7 +684,7 @@ public class Program{
                         similarNames.Add(biodataRow);
 
                         Debug.WriteLine($"NIK: {biodataMatrix[i, 0]}");
-                        Debug.WriteLine($"Nama: {biodataMatrix[i, 1]}");
+                        Debug.WriteLine($"Nama: {resultList[0]}");
                         Debug.WriteLine($"Tempat Lahir: {biodataMatrix[i, 2]}");
                         Debug.WriteLine($"Tanggal Lahir: {biodataMatrix[i, 3]}");
                         Debug.WriteLine($"Jenis Kelamin: {biodataMatrix[i, 4]}");
@@ -699,7 +699,7 @@ public class Program{
                         Debug.WriteLine($"Path image : {resultList[2]}");
 
                         this.solutionsValid[co, 0] = biodataMatrix[i, 0];
-                        this.solutionsValid[co, 1] = biodataMatrix[i, 1];
+                        this.solutionsValid[co, 1] = resultList[0];
                         this.solutionsValid[co, 2] = biodataMatrix[i, 2];
                         this.solutionsValid[co, 3] = biodataMatrix[i, 3];
                         this.solutionsValid[co, 4] = biodataMatrix[i, 4];
@@ -725,7 +725,7 @@ public class Program{
                     for (int i = 0; i < biodataMatrix.GetLength(0); i++)
                     {
                         string biodataName = biodataMatrix[i, 1];
-                        double similarity = Algorithm.CalculateLevenshteinSimilarity(biodataName.Replace(" ",""),Database.FixCorruptedName(resultList[0]).Replace(" ",""));
+                        double similarity = Algorithm.CalculateLevenshteinSimilarity(Database.FixCorruptedName(biodataName.Replace(" ","")),(resultList[0]).Replace(" ",""));
                         similarityArray.Add(similarity);
                         
                        // Debug.WriteLine(min_similar);
@@ -744,7 +744,7 @@ public class Program{
                             }
                             similarNames.Add(biodataRow);
                             Debug.WriteLine($"NIK: {biodataMatrix[i, 0]}");
-                            Debug.WriteLine($"Nama: {biodataMatrix[i, 1]}");
+                            Debug.WriteLine($"Nama: {resultList[0]}");
                             Debug.WriteLine($"Tempat Lahir: {biodataMatrix[i, 2]}");
                             Debug.WriteLine($"Tanggal Lahir: {biodataMatrix[i, 3]}");
                             Debug.WriteLine($"Jenis Kelamin: {biodataMatrix[i, 4]}");
@@ -759,7 +759,7 @@ public class Program{
                             Debug.WriteLine($"Path image : {resultList[2]}");
                             Debug.WriteLine(this.solutionsValid.ToString());
                             this.solutionsValid[co, 0] = biodataMatrix[i, 0];
-                            this.solutionsValid[co, 1] = biodataMatrix[i, 1];
+                            this.solutionsValid[co, 1] = resultList[0];
                             this.solutionsValid[co, 2] = biodataMatrix[i, 2];
                             this.solutionsValid[co, 3] = biodataMatrix[i, 3];
                             this.solutionsValid[co, 4] = biodataMatrix[i, 4];
