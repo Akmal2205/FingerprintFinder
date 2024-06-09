@@ -132,6 +132,8 @@ namespace WpfApp1
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            this.Match = "Match found : 0" ;
+            this.Time = "Time execution : 0 ms";
             if (this.Method == null || this.imagePathQuery == null) 
             {
                 MessageBox.Show("Pastikan input sesuai!", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Information);

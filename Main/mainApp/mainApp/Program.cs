@@ -482,6 +482,7 @@ public class Algorithm
             }
         }
         int maxLength = Math.Max(str1.Length, str2.Length);
+        //Debug.WriteLine((double)dp[str1.Length, str2.Length] / maxLength);
         return 100.0 * (1.0 - (double)dp[str1.Length, str2.Length] / maxLength);
     }
 
@@ -551,13 +552,14 @@ public class Algorithm
             image.Mutate(x => x.Grayscale());
             image.Mutate(x => x.HistogramEqualization());
             int threshold = CalculateOtsuThreshold(image);
+            Debug.WriteLine(threshold);
             StringBuilder binaryStringBuilder = new StringBuilder();
             int pixelCount = 0;
             int startHeight = image.Height - image.Height / 5;
 
-            for (int y = startHeight; y < image.Height && pixelCount < 80; y++)
+            for (int y = startHeight; y < image.Height && pixelCount < 120; y++)
             {
-                for (int x = 0; x < image.Width && pixelCount < 80; x++)
+                for (int x = 0; x < image.Width && pixelCount < 120; x++)
                 {
                     Rgba32 pixelColor = image[x, y];
                     int grayValue = pixelColor.R; 
@@ -565,7 +567,8 @@ public class Algorithm
                     pixelCount++;
                 }
             }
-
+            //Debug.WriteLine(BinaryArrayToAscii(binaryStringBuilder.ToString()));
+           //Debug.WriteLine(binaryStringBuilder.ToString().Length);
             return BinaryStringToAscii(binaryStringBuilder.ToString());
         }
     }
@@ -697,7 +700,7 @@ public class Program{
 
         }
 
-        if (matchingImages.Count == 0)
+        if (matchingImages.Count == 0 )
         {
             Debug.WriteLine("==============================================================");
             Debug.WriteLine("Tidak ada gambar yang exact match.\nMencari gambar menggunakan pendekatan Levenshtein!");
@@ -708,12 +711,12 @@ public class Program{
             // timer.Restart();
             for (int i = 0; i < sidikJariMatrix.GetLength(0); i++)
             {
-                string datasetBinary = sidikJariMatrix[i, 0];
+                string datasetBinary = (sidikJariMatrix[i, 0]);
                 double similarity = Algorithm.CalculateLevenshteinSimilarity(datasetBinary, queryBinary);
-                Debug.WriteLine(similarity);
-                if (similarity > 0.8)
+                //Debug.WriteLine(similarity);
+                if (similarity > min_similarity)
                 {
-                    Debug.WriteLine(similarity);
+                    
                     // Console.WriteLine($"Kemiripan ditemukan di {sidikJariMatrix[i,1]}");
                     List<string> imageFound = new List<string>();
                     imageFound.Add(sidikJariMatrix[i, 1]);
@@ -746,7 +749,7 @@ public class Program{
             foreach (List<string> resultList in matchingImages)
             {
                 List<string[]> similarNames = new List<string[]>();
-                for (int i = 0; i < biodataMatrix.GetLength(0) && co<0; i++)
+                for (int i = 0; i < biodataMatrix.GetLength(0) && co<=0; i++)
                 {
                     string biodataName = biodataMatrix[i, 1];
                     // Console.WriteLine(resultList[0]);
@@ -827,7 +830,7 @@ public class Program{
                             similarNames.Add(biodataRow);
                             //Debug.WriteLine($"NIK: {biodataMatrix[i, 0]}");
                             Debug.WriteLine($"Nama: {resultList[0]}");
-                           //Debug.WriteLine($"Tempat Lahir: {biodataMatrix[i, 2]}");
+                           Debug.WriteLine($"Nama bio: {biodataMatrix[i, 1]}");
                            //Debug.WriteLine($"Tanggal Lahir: {biodataMatrix[i, 3]}");
                            //Debug.WriteLine($"Jenis Kelamin: {biodataMatrix[i, 4]}");
                            //Debug.WriteLine($"Golongan Darah: {biodataMatrix[i, 5]}");

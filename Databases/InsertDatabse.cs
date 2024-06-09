@@ -193,27 +193,17 @@ public class Program
     using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
     {
         StringBuilder binaryStringBuilder = new StringBuilder();
-
-        // Resize the image
         image.Mutate(x => x.Resize(90, 100));
-
-        // Convert to grayscale
         image.Mutate(x => x.Grayscale());
-
-        // Enhance contrast using histogram equalization
         image.Mutate(x => x.HistogramEqualization());
-
-        // Calculate global threshold
         int threshold = CalculateOtsuThreshold(image);
         Debug.WriteLine(threshold);
-
-        // Process each pixel
         for (int y = 0; y < image.Height; y++)
         {
             for (int x = 0; x < image.Width; x++)
             {
                 Rgba32 pixelColor = image[x, y];
-                int grayValue = pixelColor.R; // Since the image is grayscale, R, G, and B are equal
+                int grayValue = pixelColor.R; 
                 binaryStringBuilder.Append(grayValue >= threshold ? '1' : '0');
             }
         }
