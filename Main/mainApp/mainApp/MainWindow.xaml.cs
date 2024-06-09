@@ -32,6 +32,7 @@ namespace WpfApp1
         public string Method;
         public string imagePath;
         public string[] result;
+        public string imagePathQuery;
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged(string propertyName)
         {
@@ -101,7 +102,7 @@ namespace WpfApp1
                     image.HorizontalAlignment = HorizontalAlignment.Center;
 
                     imageContainer.Child = image;
-                    this.imagePath = filePath;
+                    this.imagePathQuery = filePath;
                 }
                 catch (Exception ex)
                 {
@@ -131,14 +132,24 @@ namespace WpfApp1
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
+            if (this.Method == null || this.imagePathQuery == null) 
+            {
+                MessageBox.Show("Pastikan input sesuai!", "Invalid Input", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
             Program program = new Program();
-            program.mainProgram(this.Method, 80.0, this.imagePath);
+            program.mainProgram(this.Method, 80.0, this.imagePathQuery);
             Debug.WriteLine(program.solutionsValid.Length.ToString());
             Debug.WriteLine(program.timeNeeded.ToString());
             Debug.WriteLine(program.matches.ToString());
             this.Time = "Time execution : " + program.timeNeeded.ToString() + " ms";
             int matches = 0;
             if (CardItems != null) CardItems.Clear();
+            if(program.solutionsValid == null)
+            {
+                MessageBox.Show("Tidak ditemukan data yang sesuai.", "Not Found", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
             if (program.solutionsValid[0,0] != null)
             {
                 CardItems.Add(new CardItem 
@@ -163,7 +174,8 @@ namespace WpfApp1
                 "Pekerjaan\t\t: " + program.solutionsValid[0, 9],
                 "Kewarganegaraan\t: " + program.solutionsValid[0, 10],
             };
-
+            this.imagePath = program.solutionsValid[0, 12];
+            Debug.WriteLine(this.imagePathQuery);
             this.result = res;
         }
     }

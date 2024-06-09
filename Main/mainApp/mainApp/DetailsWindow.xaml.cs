@@ -30,7 +30,8 @@ namespace mainApp
             {
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
-                bitmap.UriSource = new Uri(imagePath);
+                Debug.WriteLine(this.NormalizePath(imagePath));
+                bitmap.UriSource = new Uri(this.NormalizePath(imagePath));
                 bitmap.EndInit();
 
                 Image image = new Image();
@@ -55,6 +56,17 @@ namespace mainApp
                 ResultStack.Children.Add(textBlock);
             }
         }
+        public string NormalizePath(string path)
+        {
+            // Split the path by both '/' and '\'
+            var segments = path.Split(new[] { '/', '\\' }, StringSplitOptions.None);
+
+            // Join the segments with '\\'
+            string normalizedPath = string.Join("/", segments);
+
+            return "C:/Users/ASUS/Documents/Sem 4/Stima/TUBES3_FIX/Tubes3_C-sharp-apek/Main/" + normalizedPath;
+        }
+
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
