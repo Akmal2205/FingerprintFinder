@@ -1,5 +1,7 @@
 # Tubes3_Stima
 
+![Screenshot 2024-06-08 215211](https://github.com/Akmal2205/Tubes3_C-sharp-apek/assets/131881654/fdea3964-cdd1-4e25-89fe-0abc33290ef9)
+
 ## Daftar Isi
 - [Informasi Umum](#informasi-umum)
 - [Setup](#setup)
