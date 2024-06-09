@@ -1,4 +1,4 @@
-# Tubes3_Stima
+# Tubes Stima 3 - Pencocokkan Sidik Jari Menggunakan Algoritma KMP, BM, dan Regex
 
 ![Screenshot 2024-06-08 215211](https://github.com/Akmal2205/Tubes3_C-sharp-apek/assets/131881654/fdea3964-cdd1-4e25-89fe-0abc33290ef9)
 
