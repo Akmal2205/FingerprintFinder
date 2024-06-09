@@ -539,44 +539,86 @@ public class Algorithm
         return lsp;
     }
 
-    
-   public static string ProcessImage(string imagePath)
+
+  
+
+
+    public static string ProcessImage1(string imagePath)
     {
         using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
         {
-            StringBuilder binaryStringBuilder = new StringBuilder();
             image.Mutate(x => x.Resize(90, 100));
-            for (int y = 0; y<image.Height ; y++){
-                for (int x = 0; x < image.Width; x++)
+            image.Mutate(x => x.Grayscale());
+            image.Mutate(x => x.HistogramEqualization());
+            int threshold = CalculateOtsuThreshold(image);
+            StringBuilder binaryStringBuilder = new StringBuilder();
+            int pixelCount = 0;
+            int startHeight = image.Height - image.Height / 5;
+
+            for (int y = startHeight; y < image.Height && pixelCount < 80; y++)
+            {
+                for (int x = 0; x < image.Width && pixelCount < 80; x++)
                 {
                     Rgba32 pixelColor = image[x, y];
-                    int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
-                    binaryStringBuilder.Append(grayValue >= 128 ? '1' : '0');
+                    int grayValue = pixelColor.R; 
+                    binaryStringBuilder.Append(grayValue >= threshold ? '1' : '0');
+                    pixelCount++;
                 }
             }
+
             return BinaryStringToAscii(binaryStringBuilder.ToString());
         }
     }
-    public static string ProcessImage1(string imagePath)
-{
-    using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
+
+    private static int CalculateOtsuThreshold(Image<Rgba32> image)
     {
-        image.Mutate(x => x.Resize(90, 100)); 
-        StringBuilder binaryStringBuilder = new StringBuilder();
-        int pixelCount = 0;
-        for (int y = 100-image.Height/5; y<image.Height && pixelCount<80;y++)
+        int[] histogram = new int[256];
+        for (int y = 0; y < image.Height; y++)
         {
-            for (int x = 0; x < image.Width && pixelCount < 80; x++)
+            for (int x = 0; x < image.Width; x++)
             {
                 Rgba32 pixelColor = image[x, y];
-                int grayValue = (int)(pixelColor.R * 0.3 + pixelColor.G * 0.59 + pixelColor.B * 0.11);
-                binaryStringBuilder.Append(grayValue >= 128 ? '1' : '0');
-                pixelCount++;
+                histogram[pixelColor.R]++;
             }
         }
-        return BinaryStringToAscii(binaryStringBuilder.ToString());
+
+        int totalPixels = image.Width * image.Height;
+        float sum = 0;
+        for (int i = 0; i < 256; i++)
+        {
+            sum += i * histogram[i];
+        }
+
+        float sumB = 0;
+        int wB = 0;
+        int wF = 0;
+        float varMax = 0;
+        int threshold = 0;
+
+        for (int t = 0; t < 256; t++)
+        {
+            wB += histogram[t];
+            if (wB == 0) continue;
+
+            wF = totalPixels - wB;
+            if (wF == 0) break;
+
+            sumB += t * histogram[t];
+
+            float mB = sumB / wB;
+            float mF = (sum - sumB) / wF;
+
+            float varBetween = wB * wF * (mB - mF) * (mB - mF);
+
+            if (varBetween > varMax)
+            {
+                varMax = varBetween;
+                threshold = t;
+            }
+        }
+
+        return threshold;
     }
-}
 
     public static string BinaryStringToAscii(string binaryString)
     {
@@ -668,9 +710,10 @@ public class Program{
             {
                 string datasetBinary = sidikJariMatrix[i, 0];
                 double similarity = Algorithm.CalculateLevenshteinSimilarity(datasetBinary, queryBinary);
-
-                if (similarity > min_similar)
+                Debug.WriteLine(similarity);
+                if (similarity > 0.8)
                 {
+                    Debug.WriteLine(similarity);
                     // Console.WriteLine($"Kemiripan ditemukan di {sidikJariMatrix[i,1]}");
                     List<string> imageFound = new List<string>();
                     imageFound.Add(sidikJariMatrix[i, 1]);
@@ -725,18 +768,18 @@ public class Program{
                         }
                         similarNames.Add(biodataRow);
 
-                        Debug.WriteLine($"NIK: {biodataMatrix[i, 0]}");
+                       // Debug.WriteLine($"NIK: {biodataMatrix[i, 0]}");
                         Debug.WriteLine($"Nama: {resultList[0]}");
-                        Debug.WriteLine($"Tempat Lahir: {biodataMatrix[i, 2]}");
-                        Debug.WriteLine($"Tanggal Lahir: {biodataMatrix[i, 3]}");
-                        Debug.WriteLine($"Jenis Kelamin: {biodataMatrix[i, 4]}");
-                        Debug.WriteLine($"Golongan Darah: {biodataMatrix[i, 5]}");
-                        Debug.WriteLine($"Alamat: {biodataMatrix[i, 6]}");
-                        Debug.WriteLine($"Agama: {biodataMatrix[i, 7]}");
-                        Debug.WriteLine($"Status Perkawinan: {biodataMatrix[i, 8]}");
-                        Debug.WriteLine($"Pekerjaan: {biodataMatrix[i, 9]}");
-                        Debug.WriteLine($"Kewarganegaraan: {biodataMatrix[i, 10]}");
-                        Debug.WriteLine($"Kemiripan : {resultList[1]}");
+                        //Debug.WriteLine($"Tempat Lahir: {biodataMatrix[i, 2]}");
+                       //Debug.WriteLine($"Tanggal Lahir: {biodataMatrix[i, 3]}");
+                       //Debug.WriteLine($"Jenis Kelamin: {biodataMatrix[i, 4]}");
+                       //Debug.WriteLine($"Golongan Darah: {biodataMatrix[i, 5]}");
+                       //Debug.WriteLine($"Alamat: {biodataMatrix[i, 6]}");
+                       //Debug.WriteLine($"Agama: {biodataMatrix[i, 7]}");
+                       //Debug.WriteLine($"Status Perkawinan: {biodataMatrix[i, 8]}");
+                       //Debug.WriteLine($"Pekerjaan: {biodataMatrix[i, 9]}");
+                       //Debug.WriteLine($"Kewarganegaraan: {biodataMatrix[i, 10]}");
+                       Debug.WriteLine($"Kemiripan : {resultList[1]}");
 
                         Debug.WriteLine($"Path image : {resultList[2]}");
 
@@ -771,13 +814,10 @@ public class Program{
                         similarityArray.Add(similarity);
                         
                        // Debug.WriteLine(min_similar);
-                        if (biodataName == "Bambang Bayu Rina") { Debug.WriteLine(biodataName);
-                            Debug.WriteLine(similarity);
-                            Debug.WriteLine(similarityArray.Max());
-                        }
+                        
                         if ((similarity > 50) && (similarity >= similarityArray.Max()))
                         {
-                            Debug.WriteLine(similarity>min_similar);
+                            //Debug.WriteLine(similarity);
                             Debug.WriteLine("==============================================================");
                             string[] biodataRow = new string[biodataMatrix.GetLength(1)];
                             for (int j = 0; j < biodataMatrix.GetLength(1); j++)
@@ -785,21 +825,21 @@ public class Program{
                                 biodataRow[j] = biodataMatrix[i, j];
                             }
                             similarNames.Add(biodataRow);
-                            Debug.WriteLine($"NIK: {biodataMatrix[i, 0]}");
+                            //Debug.WriteLine($"NIK: {biodataMatrix[i, 0]}");
                             Debug.WriteLine($"Nama: {resultList[0]}");
-                            Debug.WriteLine($"Tempat Lahir: {biodataMatrix[i, 2]}");
-                            Debug.WriteLine($"Tanggal Lahir: {biodataMatrix[i, 3]}");
-                            Debug.WriteLine($"Jenis Kelamin: {biodataMatrix[i, 4]}");
-                            Debug.WriteLine($"Golongan Darah: {biodataMatrix[i, 5]}");
-                            Debug.WriteLine($"Alamat: {biodataMatrix[i, 6]}");
-                            Debug.WriteLine($"Agama: {biodataMatrix[i, 7]}");
-                            Debug.WriteLine($"Status Perkawinan: {biodataMatrix[i, 8]}");
-                            Debug.WriteLine($"Pekerjaan: {biodataMatrix[i, 9]}");
-                            Debug.WriteLine($"Kewarganegaraan: {biodataMatrix[i, 10]}");
-                            Debug.WriteLine($"Kemiripan Fingerprint: {resultList[1]}");
-                            Debug.WriteLine($"Kemiripan Nama: {similarity} %");
+                           //Debug.WriteLine($"Tempat Lahir: {biodataMatrix[i, 2]}");
+                           //Debug.WriteLine($"Tanggal Lahir: {biodataMatrix[i, 3]}");
+                           //Debug.WriteLine($"Jenis Kelamin: {biodataMatrix[i, 4]}");
+                           //Debug.WriteLine($"Golongan Darah: {biodataMatrix[i, 5]}");
+                           //Debug.WriteLine($"Alamat: {biodataMatrix[i, 6]}");
+                           //Debug.WriteLine($"Agama: {biodataMatrix[i, 7]}");
+                           //Debug.WriteLine($"Status Perkawinan: {biodataMatrix[i, 8]}");
+                           //Debug.WriteLine($"Pekerjaan: {biodataMatrix[i, 9]}");
+                           //Debug.WriteLine($"Kewarganegaraan: {biodataMatrix[i, 10]}");
+                           Debug.WriteLine($"Kemiripan Fingerprint: {resultList[1]}");
+                           Debug.WriteLine($"Kemiripan Nama: {similarity} %");
                             Debug.WriteLine($"Path image : {resultList[2]}");
-                            Debug.WriteLine(this.solutionsValid.ToString());
+                           // Debug.WriteLine(this.solutionsValid.ToString());
                             this.solutionsValid[co, 0] = biodataMatrix[i, 0];
                             this.solutionsValid[co, 1] = resultList[0];
                             this.solutionsValid[co, 2] = biodataMatrix[i, 2];
