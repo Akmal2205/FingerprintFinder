@@ -113,11 +113,52 @@ public class Encryption{
 public class Database
 {
     public static string connectionString = "Server=localhost;Database=TubesStima3;Uid=root;Pwd=308140;";
-    public static int jumlahdata =6000;
+
+    public static int totalDataSidikJari;
+    public static int totalDataBiodata;
+    public static void GetTotalBiodata()
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM biodata";
+                MySqlCommand command = new MySqlCommand(query, connection);
+
+                totalDataBiodata = Convert.ToInt32(command.ExecuteScalar());
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
+    public static void GetTotalSidikJari()
+    {
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                connection.Open();
+
+                string query = "SELECT COUNT(*) FROM sidik_jari";
+                MySqlCommand command = new MySqlCommand(query, connection);
+
+                totalDataSidikJari = Convert.ToInt32(command.ExecuteScalar());
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }
     public static string[,] RetrieveBiodataMatrix()
     {
-        
-        string[,] biodataMatrix = new string[600, 11]; 
+
+        GetTotalBiodata();
+        string[,] biodataMatrix = new string[totalDataBiodata, 11];
 
         try
         {
@@ -131,7 +172,7 @@ public class Database
                 MySqlDataReader reader = command.ExecuteReader();
 
                 int row = 0;
-                while (reader.Read() && row < jumlahdata)
+                while (reader.Read() && row < totalDataBiodata)
                 {
                     biodataMatrix[row, 0] = reader.GetString("NIK");
                     biodataMatrix[row, 1] = Encryption.RSADecryption(reader.GetString("nama"), isEncrypting: false);
@@ -161,7 +202,8 @@ public class Database
 
     public static string[,] RetrieveSidikJariMatrix()
     {
-        string[,] sidikJariMatrix = new string[jumlahdata, 3]; 
+        GetTotalSidikJari();
+        string[,] sidikJariMatrix = new string[totalDataSidikJari, 3]; 
 
         try
         {
@@ -175,7 +217,7 @@ public class Database
                 MySqlDataReader reader = command.ExecuteReader();
 
                 int row = 0;
-                while (reader.Read() && row < jumlahdata)
+                while (reader.Read() && row < totalDataSidikJari)
                 {
                     sidikJariMatrix[row, 0] = reader.GetString("berkas_citra");
                     sidikJariMatrix[row, 1] = (reader.GetString("nama"));

@@ -15,7 +15,9 @@ using System.Text.RegularExpressions;
 
 public class Program
 {
-    private static string connectionString = "Server=localhost;Database=TubesStima3;User ID=root;Password=308140;";
+     public static string connectionString = "Server=localhost;Database=TubesStima3;Uid=root;Pwd=308140;";
+
+
     private static Random random = new Random();
    
         public static void Main(string[] args)
@@ -134,24 +136,39 @@ public class Program
     }
 
     private static string[] GenerateNamesArray()
+{
+    string[] commonNames = new string[]
     {
-        string[] commonNames = new string[]
-        {
-            "Budi", "Siti", "Andi", "Rina", "Dewi", "Tono", "Wati", "Agus", "Sri", "Yanto",
-            "Rudi", "Ani", "Hendra", "Maya", "Ahmad", "Fitri", "Bambang", "Nur", "Fajar", "Ayu",
-            "Eko", "Lina", "Bayu", "Nia", "Udin", "Lilis", "Joko", "Indah", "Teguh", "Rita",
-            "Heri", "Aisyah", "Adi", "Rosi", "Arif", "Mega", "Rahmat", "Putri", "Yusuf", "Lina",
-            "Dani", "Irma", "Tomi", "Fina", "Hasan", "Sari", "Roni", "Lestari", "Tari", "Amir"
-        };
+        "Budi", "Siti", "Andi", "Rina", "Dewi", "Tono", "Wati", "Agus", "Sri", "Yanto",
+        "Rudi", "Ani", "Hendra", "Maya", "Ahmad", "Fitri", "Bambang", "Nur", "Fajar", "Ayu",
+        "Eko", "Lina", "Bayu", "Nia", "Udin", "Lilis", "Joko", "Indah", "Teguh", "Rita",
+        "Heri", "Aisyah", "Adi", "Rosi", "Arif", "Mega", "Rahmat", "Putri", "Yusuf", "Lina",
+        "Dani", "Irma", "Tomi", "Fina", "Hasan", "Sari", "Roni", "Lestari", "Tari", "Amir"
+    };
 
-        string[] namesArray = new string[6000];
-        Random random = new Random();
-        
-        for (int i = 0; i < namesArray.Length; i++)
+    string[] namesArray = new string[6000];
+    HashSet<string> namesSet = new HashSet<string>();
+    Random random = new Random();
+    
+    for (int i = 0; i < namesArray.Length; i++)
+    {
+        StringBuilder nameBuilder = new StringBuilder();
+        int randomlen = random.Next(3);
+        for (int j = 0; j < randomlen + 1; j++)
         {
-            StringBuilder nameBuilder = new StringBuilder();
-            int randomlen = random.Next(3);
-            for (int j = 0; j < randomlen+1; j++)
+            if (j > 0)
+            {
+                nameBuilder.Append(" ");
+            }
+            nameBuilder.Append(commonNames[random.Next(commonNames.Length)]);
+        }
+        
+        string name = nameBuilder.ToString();
+        while (namesSet.Contains(name))
+        {
+            nameBuilder.Clear();
+            randomlen = random.Next(3);
+            for (int j = 0; j < randomlen + 1; j++)
             {
                 if (j > 0)
                 {
@@ -159,12 +176,16 @@ public class Program
                 }
                 nameBuilder.Append(commonNames[random.Next(commonNames.Length)]);
             }
-            
-            namesArray[i] = nameBuilder.ToString();
+            name = nameBuilder.ToString();
         }
 
-        return namesArray;
+        namesSet.Add(name);
+        namesArray[i] = name;
     }
+
+    return namesArray;
+}
+
 
 
    private static string ProcessImage(string imagePath)
