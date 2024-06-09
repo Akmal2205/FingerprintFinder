@@ -41,8 +41,8 @@ Regex:
     ```
   5) Ubah password root pada file program.cs di kelas Database pada direktori mainApp menjadi password root masing-masing.
 ## Cara Penggunaan
-
-1. Jalankan program dengan memencet tombol debug dengan panah hijau yang bertuliskan 'mainApp'.
+1. Buka program melalui Visual Studio 2022 dengan membuka "a project or a solution" dan membuka mainApp.sln pada direktori ../Main/mainApp
+2. Jalankan program dengan memencet tombol debug dengan panah hijau yang bertuliskan 'mainApp'.
 ![Screenshot 2024-06-09 193943](https://github.com/Akmal2205/Tubes3_C-sharp-apek/assets/131881654/f4338969-0920-49f4-a93e-3c4c4729c5c0)
 
 ## Kontributor
