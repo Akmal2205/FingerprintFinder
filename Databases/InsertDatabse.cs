@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 
 public class Program
 {
-     public static string connectionString = "Server=localhost;Database=TubesStima3;Uid=root;Pwd=308140;";
+     public static string connectionString = "Server=localhost;Database=TubesStima3;Uid=root;Pwd=220504;";
 
 
     private static Random random = new Random();

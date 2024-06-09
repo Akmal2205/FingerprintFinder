@@ -112,7 +112,7 @@ public class Encryption{
 }
 public class Database
 {
-    public static string connectionString = "Server=localhost;Database=TubesStima3;Uid=root;Pwd=308140;";
+    public static string connectionString = "Server=localhost;Database=TubesStima3;Uid=root;Pwd=220504;";
 
     public static int totalDataSidikJari;
     public static int totalDataBiodata;
@@ -409,6 +409,29 @@ public class Database
 
 public class Algorithm
 {
+    public static string ProcessImageFull(string imagePath)
+    {
+        using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
+        {
+            int yCount = 0;
+            int nullCount = 0;
+            image.Mutate(x => x.Resize(90, 100));
+            image.Mutate(x => x.Grayscale());
+            image.Mutate(x => x.HistogramEqualization());
+            int threshold = CalculateOtsuThreshold(image);
+            StringBuilder temp = new StringBuilder();
+            for (int y = 0; y < image.Height; y++)
+            {
+                for (int x = 0; x < image.Width; x++)
+                {
+                    Rgba32 pixelColor = image[x, y];
+                    int grayValue = pixelColor.R;
+                    temp.Append(grayValue >= threshold ? '1' : '0');
+                }
+            }
+            return BinaryArrayToAscii(temp.ToString());
+        }
+    }
     public static int BMMatch(string pattern, string text)
     {
         int[] last = BuildLast(pattern);
@@ -541,37 +564,83 @@ public class Algorithm
     }
 
 
-  
+
 
 
     public static string ProcessImage1(string imagePath)
     {
         using (Image<Rgba32> image = Image.Load<Rgba32>(imagePath))
         {
+            int yCount = 0;
+            int nullCount = 0;
             image.Mutate(x => x.Resize(90, 100));
             image.Mutate(x => x.Grayscale());
             image.Mutate(x => x.HistogramEqualization());
             int threshold = CalculateOtsuThreshold(image);
-            Debug.WriteLine(threshold);
+            // Debug.WriteLine(threshold);
             StringBuilder binaryStringBuilder = new StringBuilder();
-            int pixelCount = 0;
-            int startHeight = image.Height - image.Height / 5;
-
-            for (int y = startHeight; y < image.Height && pixelCount < 120; y++)
+            StringBuilder temp = new StringBuilder();
+            for (int y = 0; y < image.Height; y++)
             {
-                for (int x = 0; x < image.Width && pixelCount < 120; x++)
+                for (int x = 0; x < image.Width; x++)
                 {
                     Rgba32 pixelColor = image[x, y];
-                    int grayValue = pixelColor.R; 
-                    binaryStringBuilder.Append(grayValue >= threshold ? '1' : '0');
-                    pixelCount++;
+                    int grayValue = pixelColor.R;
+                    temp.Append(grayValue >= threshold ? '1' : '0');
                 }
             }
-            //Debug.WriteLine(BinaryArrayToAscii(binaryStringBuilder.ToString()));
-           //Debug.WriteLine(binaryStringBuilder.ToString().Length);
-            return BinaryStringToAscii(binaryStringBuilder.ToString());
+            string asciStringImage = BinaryArrayToAscii(temp.ToString());
+            // Console.WriteLine(asciStringImage);
+            string bestSubstring = "";
+            int bestScore = int.MinValue;
+            for (int i = 0; i <= asciStringImage.Length - 15; i++)
+            {
+                string substring = asciStringImage.Substring(i, 15);
+                int score = CalculateProximityDiversityScore(substring);
+
+                if (score > bestScore)
+                {
+                    bestScore = score;
+                    bestSubstring = substring;
+                }
+            }
+            return bestSubstring;
         }
     }
+    public static int CalculateProximityDiversityScore(string substring)
+    {
+        int score = 0;
+        int lastNullIndex = -1;
+        int lastYIndex = -1;
+
+        for (int i = 0; i < substring.Length; i++)
+        {
+            if (substring[i] == '\0')
+            {
+                if (lastNullIndex != -1 && i - lastNullIndex <= 1)
+                {
+                    score--;
+                }
+                lastNullIndex = i;
+            }
+            else if (substring[i] == 'ÿ')
+            {
+                if (lastYIndex != -1 && i - lastYIndex <= 1)
+                {
+                    score--;
+                }
+                lastYIndex = i;
+            }
+            else
+            {
+                score++;
+            }
+        }
+
+        return score;
+    }
+
+
 
     private static int CalculateOtsuThreshold(Image<Rgba32> image)
     {
@@ -709,11 +778,12 @@ public class Program{
 
 
             // timer.Restart();
+            queryBinary = Algorithm.ProcessImageFull(imagePathQuery);
             for (int i = 0; i < sidikJariMatrix.GetLength(0); i++)
             {
                 string datasetBinary = (sidikJariMatrix[i, 0]);
                 double similarity = Algorithm.CalculateLevenshteinSimilarity(datasetBinary, queryBinary);
-                //Debug.WriteLine(similarity);
+                Debug.WriteLine(similarity);
                 if (similarity > min_similarity)
                 {
                     
