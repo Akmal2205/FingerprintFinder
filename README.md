@@ -12,10 +12,10 @@
 
 Repository ini berisi program yang mengimplementasikan algoritma pattern matching Knuth-Morris-Pratt (KMP), Boyer-Moore (BM), dan juga regex untuk mengidentifikasi pemilik sebuah sidik jari berdasarkan nilai ASCII-8bit dari citra dan database identitas kepemilikan sidk jari.
 Pencocokan citra dilakukan dengan cara mengubah citra menjadi representasi biner berdasarkan nilai gelap-terangnya sidik jari lalu mengubahnya lagi menjadi representasi ASCII-8bit yang nantinya akan dilakukan komparasi menggunakan algoritma KMP dan BM:
-KMP:
+## - KMP:
 - Pencocokan algorimta KMP memiliki fitur utama yaitu tabel prefix. Tabel ini digunakan sebagai penanda perpindahan indeks pada pattern saat terjadi mismatch dengan tujuan agar tidak melakukan backtrack terus menerus seperti pada algoritma naive (bruteforce).
 - Saat terjadi mismatch maka proses pencocokan akan memindahkan indeks pattern sesuai pada tabel prefix
-BM:
+## - BM:
 - Pencocokan algoritma BM memiliki fitur utama yaitu last occurence table, last occurence table adalah tabel yang berisi lokasi indeks terakhir dari karakter-karakter pada string yang berada pada pattern, apabila tidak ada maka akan bernilai -1.
 - Pencocokan algoritma ini juga dilakukan dengan cara mundur "looking-glass technique". 
 - Berbeda dengan KMP, tabel ini digunakan untuk melakukan "smart jumping" dari index penelusuran (indeks yang menjadi acuan "looking-glass technique") pada string berdasarkan 3 kasus mismatch yaitu,
