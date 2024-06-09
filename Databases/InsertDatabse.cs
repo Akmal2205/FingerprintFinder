@@ -15,7 +15,7 @@ using System.Text.RegularExpressions;
 
 public class Program
 {
-    private static string connectionString = "Server=localhost;Database=TubesStima3;User ID=root;Password=220504;";
+    private static string connectionString = "Server=localhost;Database=TubesStima3;User ID=root;Password=308140;";
     private static Random random = new Random();
    
         public static void Main(string[] args)
@@ -77,9 +77,9 @@ public class Program
                     }
                     for (int j = 0; j < line.Count; j += 2)
                     {
-                        InsertIntoDatabase(randomName, names[i], line[j], line[j + 1]);
+                        InsertIntoDatabase(names[i], line[j], line[j + 1]);
                     }
-                    InsertIntoDatabaseBiodata(names[i]);
+                    InsertIntoDatabaseBiodata(randomName);
                 }
                 i++;
             }
@@ -116,7 +116,7 @@ public class Program
         }
     }
 
-    private static void InsertIntoDatabase(string name, string realname,string text,string path)
+    private static void InsertIntoDatabase(string name,string text,string path)
     {
         using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
